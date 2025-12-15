@@ -222,7 +222,13 @@
                 events: [
                     { time: "3:00 PM", title: "Land at SGN Airport", desc: "Clear immigration. Book two 7-seater Grabs to District 1." },
                     { time: "5:30 PM", title: "Check-in Airbnb", desc: "38 Dinh Tien Hoang. Freshen up." },
-                    { time: "7:00 PM", title: "Man Moi (Tao Dan)", isBooked: true, desc: "Modern Vietnamese bistro. Estimate ~20 min Grab from 38 Dinh Tien Hoang to 34 Vo Van Tan." },
+                    { 
+                        time: "7:00 PM", 
+                        title: "Man Moi (Tao Dan)", 
+                        isBooked: true, 
+                        mapLink: "https://www.google.com/maps?q=Mặn+Mòi,+Tao+Đàn+-+34+Võ+Văn+Tần,+34+Võ+Văn+Tần,+Phường+6,+Quận+3,+Thành+phố+Hồ+Chí+Minh+70000,+Vietnam&ftid=0x31752f45e3ba9d6d:0x2b118e6c5816cfc0&entry=gps&shh=CAE&lucs=,94275415,94284493,94231188,94280568,47071704,94218641,94282134,94203019,94286869&g_ep=CAISEjI1LjQ3LjAuODMzNTQyOTMwMBgAIIgnKlEsOTQyNzU0MTUsOTQyODQ0OTMsOTQyMzExODgsOTQyODA1NjgsNDcwNzE3MDQsOTQyMTg2NDEsOTQyODIxMzQsOTQyMDMwMTksOTQyODY4NjlCAlNH&skid=7d3cdf0d-6da8-4ac7-98c8-d4e790f924c7&g_st=ipc",
+                        desc: "Modern Vietnamese bistro. Estimate ~20 min Grab from 38 Dinh Tien Hoang to 34 Vo Van Tan." 
+                    },
                     { time: "9:00 PM", title: "Nguyen Hue Walking Street", desc: "See the City Hall lit up. Kids can run around. Grab some ice cream." }
                 ]
             },
@@ -260,7 +266,13 @@
                     { time: "11:25 AM", title: "Check-in SGN Domestic", desc: "Vietnam Airlines / Vietjet counters." },
                     { time: "1:25 PM", title: "Fly to Da Nang", desc: "Flight Duration: ~1h 25m." },
                     { time: "2:50 PM", title: "Land in Da Nang", desc: "Grab to Son Tra Airbnb (5 Phan Ba Vanh)." },
-                    { time: "7:30 PM", title: "Pizza 4P's Indochina", isBooked: true, desc: "Riverside View. Estimate ~15 min Grab from 5 Phan Ba Vanh to 74 Bach Dang." }
+                    { 
+                        time: "7:30 PM", 
+                        title: "Pizza 4P's Indochina", 
+                        isBooked: true, 
+                        mapLink: "https://www.google.com/maps?q=Pizza+4P%27s+Indochina+Da+Nang,+74+Bạch+Đằng,+Street,+Hải+Châu,+Đà+Nẵng+550000,+Vietnam&ftid=0x3142193cf50bef09:0x6f1b1de8e432c22e&entry=gps&shh=CAE&lucs=,94297695,94275415,94284493,94231188,94280568,47071704,94218641,94282134,94286869&g_ep=CAISEjI1LjQ5LjkuODM4ODk5MTgzMBgAIIgnKlEsOTQyOTc2OTUsOTQyNzU0MTUsOTQyODQ0OTMsOTQyMzExODgsOTQyODA1NjgsNDcwNzE3MDQsOTQyMTg2NDEsOTQyODIxMzQsOTQyODY4NjlCAlNH&skid=9678aecb-6664-4b38-96cb-b1411faaad21&g_st=ipc",
+                        desc: "Riverside View. Estimate ~15 min Grab from 5 Phan Ba Vanh to 74 Bach Dang." 
+                    }
                 ]
             },
             {
@@ -383,7 +395,10 @@
                                 </div>
                                 <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-1">
                                     <span class="font-bold text-green-700 text-sm w-24 flex-shrink-0">${event.time}</span>
-                                    <h4 class="font-bold text-green-900 text-lg flex-grow">${event.title}</h4>
+                                    <div class="flex-grow">
+                                        <h4 class="font-bold text-green-900 text-lg inline mr-2">${event.title}</h4>
+                                        ${event.mapLink ? `<a href="${event.mapLink}" target="_blank" class="inline-flex items-center text-xs bg-white border border-green-300 text-green-700 px-2 py-0.5 rounded-full hover:bg-green-100 transition"><i class="fas fa-location-dot mr-1"></i> View Map</a>` : ''}
+                                    </div>
                                 </div>
                                 <p class="text-green-800 text-sm">${event.desc}</p>
                             </div>
