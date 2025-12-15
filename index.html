@@ -85,8 +85,7 @@
         <section class="text-center space-y-2">
             <h2 class="text-2xl font-bold text-gray-800">Welcome to Vietnam</h2>
             <p class="text-gray-600 text-sm max-w-lg mx-auto">
-                A curated itinerary for the whole family. From the bustling streets of Saigon to the beaches of Da Nang.
-                Tap the sections below to navigate your journey.
+                Your updated itinerary with confirmed bookings. Tap the sections below to navigate your journey.
             </p>
         </section>
 
@@ -151,7 +150,7 @@
         <section id="itinerary" class="space-y-4">
             <div class="flex items-center justify-between">
                 <h3 class="text-xl font-bold text-gray-800">Daily Itinerary</h3>
-                <span class="text-xs text-gray-500">Tap days to view</span>
+                <span class="text-xs text-gray-500">Tap days to view details</span>
             </div>
 
             <!-- Date Tabs -->
@@ -175,8 +174,8 @@
                 </div>
             </div>
             <div class="bg-white p-5 rounded-xl shadow-sm">
-                <h3 class="font-bold text-gray-800 mb-4 text-sm uppercase tracking-wide border-b pb-2">Estimated Daily Cost (Per Pax)</h3>
-                <p class="text-xs text-gray-500 mb-4">Approximate spend for food, entry fees & transport (excl. flights/stays).</p>
+                <h3 class="font-bold text-gray-800 mb-4 text-sm uppercase tracking-wide border-b pb-2">Est. Daily Cost (Per Pax)</h3>
+                <p class="text-xs text-gray-500 mb-4">Approximate spend for food & transport (excl. flights/stays/pre-booked).</p>
                 <div class="chart-container">
                     <canvas id="costChart"></canvas>
                 </div>
@@ -221,10 +220,10 @@
                 city: "HCMC",
                 color: "amber",
                 events: [
-                    { time: "3:00 PM", title: "Land at SGN Airport", icon: "fa-plane-arrival", desc: "Clear immigration. Book two 7-seater Grabs to District 1." },
-                    { time: "5:30 PM", title: "Check-in Airbnb", icon: "fa-key", desc: "38 Dinh Tien Hoang. Freshen up." },
-                    { time: "7:00 PM", title: "Dinner: Pizza 4P's", icon: "fa-utensils", desc: "Famous fusion pizza. Kid friendly. Book in advance! (Ben Thanh branch)." },
-                    { time: "9:00 PM", title: "Nguyen Hue Walking Street", icon: "fa-walking", desc: "See the City Hall lit up. Kids can run around. Grab some ice cream." }
+                    { time: "3:00 PM", title: "Land at SGN Airport", desc: "Clear immigration. Book two 7-seater Grabs to District 1." },
+                    { time: "5:30 PM", title: "Check-in Airbnb", desc: "38 Dinh Tien Hoang. Freshen up." },
+                    { time: "7:00 PM", title: "Man Moi (Tao Dan)", isBooked: true, desc: "Modern Vietnamese bistro. Estimate ~20 min Grab from 38 Dinh Tien Hoang to 34 Vo Van Tan." },
+                    { time: "9:00 PM", title: "Nguyen Hue Walking Street", desc: "See the City Hall lit up. Kids can run around. Grab some ice cream." }
                 ]
             },
             {
@@ -233,10 +232,10 @@
                 city: "HCMC",
                 color: "amber",
                 events: [
-                    { time: "8:00 AM", title: "Cu Chi Tunnels Tour", icon: "fa-dungeon", desc: "Book a half-day private tour for 12 pax. Kids love the tunnels. Wear bug spray." },
-                    { time: "1:00 PM", title: "Lunch: Secret Garden", icon: "fa-leaf", desc: "Rooftop home-cooked style Vietnamese food." },
-                    { time: "3:00 PM", title: "Artinus 3D Art Museum", icon: "fa-palette", desc: "Great for 9 & 11 year olds. Funny photos. Indoor and AC cooled." },
-                    { time: "7:00 PM", title: "Ben Thanh Night Market", icon: "fa-store", desc: "Street food dinner. Watch your bags. Good for souvenir shopping." }
+                    { time: "8:00 AM", title: "Cu Chi Tunnels Tour", desc: "Book a half-day private tour for 12 pax. Kids love the tunnels. Wear bug spray." },
+                    { time: "1:00 PM", title: "Lunch: Secret Garden", desc: "Rooftop home-cooked style Vietnamese food." },
+                    { time: "3:00 PM", title: "Artinus 3D Art Museum", desc: "Great for 9 & 11 year olds. Funny photos. Indoor and AC cooled." },
+                    { time: "7:00 PM", title: "Ben Thanh Night Market", desc: "Street food dinner. Watch your bags. Good for souvenir shopping." }
                 ]
             },
             {
@@ -245,10 +244,10 @@
                 city: "HCMC",
                 color: "amber",
                 events: [
-                    { time: "9:00 AM", title: "City Landmarks", icon: "fa-landmark", desc: "Independence Palace & Post Office. Easy walking distance." },
-                    { time: "12:00 PM", title: "Lunch: Pho Hoa Pasteur", icon: "fa-bowl-rice", desc: "One of the best Pho spots in the city." },
-                    { time: "2:00 PM", title: "Shopping: Saigon Centre", icon: "fa-shopping-bag", desc: "Takashimaya. High-end AC shopping. Break from the heat." },
-                    { time: "6:00 PM", title: "Saigon River Dinner Cruise", icon: "fa-ship", desc: "Book via Klook/Trip.com. Nice views, includes dinner." }
+                    { time: "9:00 AM", title: "City Landmarks", desc: "Independence Palace & Post Office. Easy walking distance." },
+                    { time: "12:00 PM", title: "Lunch: Pho Hoa Pasteur", desc: "One of the best Pho spots in the city." },
+                    { time: "2:00 PM", title: "Shopping: Saigon Centre", desc: "Takashimaya. High-end AC shopping. Break from the heat." },
+                    { time: "6:00 PM", title: "Saigon River Dinner Cruise", desc: "Book via Klook/Trip.com. Nice views, includes dinner." }
                 ]
             },
             {
@@ -257,11 +256,11 @@
                 city: "Transit",
                 color: "red",
                 events: [
-                    { time: "10:15 AM", title: "Leave Airbnb", icon: "fa-taxi", desc: "Mandatory departure time. Traffic to airport can be bad." },
-                    { time: "11:25 AM", title: "Check-in SGN Domestic", icon: "fa-passport", desc: "Vietnam Airlines / Vietjet counters." },
-                    { time: "1:25 PM", title: "Fly to Da Nang", icon: "fa-plane", desc: "Flight Duration: ~1h 25m." },
-                    { time: "2:50 PM", title: "Land in Da Nang", icon: "fa-plane-arrival", desc: "Grab to Son Tra Airbnb (5 Phan Ba Vanh)." },
-                    { time: "6:00 PM", title: "Seafood Dinner", icon: "fa-fish", desc: "Try 'Quan Be Man'. Pick your own seafood. Noisy but fun local experience." }
+                    { time: "10:15 AM", title: "Leave Airbnb", desc: "Mandatory departure time. Traffic to airport can be bad." },
+                    { time: "11:25 AM", title: "Check-in SGN Domestic", desc: "Vietnam Airlines / Vietjet counters." },
+                    { time: "1:25 PM", title: "Fly to Da Nang", desc: "Flight Duration: ~1h 25m." },
+                    { time: "2:50 PM", title: "Land in Da Nang", desc: "Grab to Son Tra Airbnb (5 Phan Ba Vanh)." },
+                    { time: "7:30 PM", title: "Pizza 4P's Indochina", isBooked: true, desc: "Riverside View. Estimate ~15 min Grab from 5 Phan Ba Vanh to 74 Bach Dang." }
                 ]
             },
             {
@@ -270,9 +269,10 @@
                 city: "Da Nang",
                 color: "cyan",
                 events: [
-                    { time: "8:30 AM", title: "Ba Na Hills (Full Day)", icon: "fa-mountain", desc: "Take the cable car. See Golden Bridge. Fantasy Park is included in ticket - huge indoor arcade for kids." },
-                    { time: "5:00 PM", title: "Return to City", icon: "fa-bus", desc: "Cable car down." },
-                    { time: "7:30 PM", title: "Xmas Eve Dinner: Madame Lan", icon: "fa-wine-glass", desc: "Beautiful courtyard restaurant. Vietnamese cuisine. Need reservation." }
+                    { time: "9:00 AM", title: "Pink Cathedral & Han Market", desc: "Visit the famous pink church then shop for souvenirs/snacks across the street." },
+                    { time: "12:00 PM", title: "Lunch: Banh Xeo Ba Duong", desc: "Local specialty savory pancakes. Fun experience." },
+                    { time: "2:00 PM", title: "My Khe Beach", desc: "Relaxing afternoon by the sea. Soft sand, great for kids." },
+                    { time: "7:00 PM", title: "Xmas Eve Dinner: Madame Lan", desc: "Beautiful courtyard restaurant. Reserve ahead!" }
                 ]
             },
             {
@@ -281,10 +281,10 @@
                 city: "Hoi An",
                 color: "cyan",
                 events: [
-                    { time: "10:00 AM", title: "Marble Mountains", icon: "fa-hiking", desc: "Caves and pagodas. There is an elevator for elderly/tired legs." },
-                    { time: "2:00 PM", title: "Hoi An Ancient Town", icon: "fa-torii-gate", desc: "30 min drive. No cars allowed in center. Rent bikes or walk." },
-                    { time: "5:00 PM", title: "Lantern Boat Ride", icon: "fa-sailboat", desc: "On Thu Bon river. Release a lantern for Xmas wishes." },
-                    { time: "8:00 PM", title: "Night Market & Return", icon: "fa-moon", desc: "Shopping for leather/tailoring. Return to Da Nang." }
+                    { time: "10:00 AM", title: "Marble Mountains", desc: "Caves and pagodas. There is an elevator for elderly/tired legs." },
+                    { time: "2:00 PM", title: "Hoi An Ancient Town", desc: "30 min drive. No cars allowed in center. Rent bikes or walk." },
+                    { time: "5:00 PM", title: "Lantern Boat Ride", desc: "On Thu Bon river. Release a lantern for Xmas wishes." },
+                    { time: "8:00 PM", title: "Night Market & Return", desc: "Shopping for leather/tailoring. Return to Da Nang." }
                 ]
             },
             {
@@ -293,9 +293,10 @@
                 city: "Da Nang",
                 color: "cyan",
                 events: [
-                    { time: "9:00 AM", title: "My Khe Beach", icon: "fa-umbrella-beach", desc: "Relaxing morning. Sand is soft, water is clean." },
-                    { time: "2:00 PM", title: "Son Tra Peninsula", icon: "fa-eye", desc: "Visit Lady Buddha (Linh Ung Pagoda). Monkeys often seen here!" },
-                    { time: "6:00 PM", title: "Helio Night Market", icon: "fa-beer", desc: "Modern, clean night market. Live music, grilled food, carnival games for kids." }
+                    { time: "10:00 AM", title: "Coffee Making Workshop", isBooked: true, desc: "Learn to make Vietnamese coffee. ~15 min Grab to city center." },
+                    { time: "12:30 PM", title: "Lunch", desc: "Try Mi Quang 1A near the center." },
+                    { time: "2:30 PM", title: "Son Tra Peninsula", desc: "Visit Lady Buddha (Linh Ung Pagoda). Monkeys often seen here!" },
+                    { time: "6:00 PM", title: "Helio Night Market", desc: "Modern, clean night market. Live music, grilled food, carnival games for kids." }
                 ]
             },
             {
@@ -304,9 +305,12 @@
                 city: "Da Nang",
                 color: "cyan",
                 events: [
-                    { time: "10:00 AM", title: "Han Market", icon: "fa-shopping-basket", desc: "Buy dried fruits, coffee, souvenirs." },
-                    { time: "3:00 PM", title: "Asia Park (Sun World)", icon: "fa-dharmachakra", desc: "Massive Ferris Wheel (Sun Wheel). Rides open late afternoon." },
-                    { time: "9:00 PM", title: "Dragon Bridge Fire Show", icon: "fa-dragon", desc: "HAPPENS SATURDAY ONLY. Be at the bridge head by 8:45 PM." }
+                    { time: "8:30 AM", title: "Depart for Ba Na Hills", desc: "~45-60 min drive. Book round trip transport." },
+                    { time: "9:30 AM", title: "Ba Na Hills Admission", isBooked: true, desc: "Cable car ride, Golden Bridge, French Village." },
+                    { time: "12:00 PM", title: "Intl. Lunch Buffet", isBooked: true, desc: "Included in booking. Wide variety for everyone." },
+                    { time: "2:00 PM", title: "Alpine Coaster", isBooked: true, desc: "Self-controlled coaster ride. Included in your booking." },
+                    { time: "5:00 PM", title: "Return to Da Nang", desc: "Rest at Airbnb." },
+                    { time: "9:00 PM", title: "Dragon Bridge Fire Show", desc: "(Optional) Only happens Sat/Sun at 9pm. Head to bridge head." }
                 ]
             },
             {
@@ -315,8 +319,8 @@
                 city: "Home",
                 color: "gray",
                 events: [
-                    { time: "9:30 AM", title: "Checkout & Leave", icon: "fa-suitcase", desc: "Say goodbye to Da Nang." },
-                    { time: "11:50 AM", title: "Flight Home", icon: "fa-plane-departure", desc: "Safe travels!" }
+                    { time: "9:30 AM", title: "Checkout & Leave", desc: "Say goodbye to Da Nang." },
+                    { time: "11:50 AM", title: "Flight Home", desc: "Safe travels!" }
                 ]
             }
         ];
@@ -364,17 +368,41 @@
                 <div class="space-y-6 relative border-l-2 border-${data.color}-100 ml-3 pl-6">
             `;
 
-            html += data.events.map(event => `
-                <div class="relative group">
-                    <div class="absolute -left-[31px] bg-${data.color}-500 h-4 w-4 rounded-full border-4 border-white shadow-sm mt-1.5"></div>
-                    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1">
-                        <span class="font-bold text-${data.color}-600 text-sm w-20 flex-shrink-0">${event.time}</span>
-                        <h4 class="font-bold text-gray-800 text-lg">${event.title}</h4>
-                    </div>
-                    <p class="text-gray-600 text-sm mt-1 bg-gray-50 p-3 rounded-lg border border-gray-100">${event.desc}</p>
-                    <i class="fas ${event.icon} absolute top-1 right-0 text-gray-200 text-xl group-hover:text-${data.color}-200 transition-colors"></i>
-                </div>
-            `).join('');
+            html += data.events.map(event => {
+                if (event.isBooked) {
+                    // BOOKED ITEM - Green Card
+                    return `
+                        <div class="relative group">
+                            <!-- Larger Timeline Dot -->
+                            <div class="absolute -left-[38px] bg-green-500 h-5 w-5 rounded-full border-4 border-white shadow-sm mt-4 z-10"></div>
+                            
+                            <!-- Full Green Card -->
+                            <div class="bg-green-50 border border-green-200 rounded-xl p-4 shadow-sm relative">
+                                <div class="absolute top-0 right-0 bg-green-200 text-green-800 text-[10px] font-bold px-2 py-1 rounded-bl-lg rounded-tr-lg uppercase tracking-wider">
+                                    Booked
+                                </div>
+                                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-1">
+                                    <span class="font-bold text-green-700 text-sm w-24 flex-shrink-0">${event.time}</span>
+                                    <h4 class="font-bold text-green-900 text-lg flex-grow">${event.title}</h4>
+                                </div>
+                                <p class="text-green-800 text-sm">${event.desc}</p>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // STANDARD ITEM
+                    return `
+                        <div class="relative group">
+                            <div class="absolute -left-[31px] bg-${data.color}-500 h-4 w-4 rounded-full border-4 border-white shadow-sm mt-1.5"></div>
+                            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1">
+                                <span class="font-bold text-${data.color}-600 text-sm w-20 flex-shrink-0">${event.time}</span>
+                                <h4 class="font-bold text-gray-800 text-lg">${event.title}</h4>
+                            </div>
+                            <p class="text-gray-600 text-sm mt-1 bg-gray-50 p-3 rounded-lg border border-gray-100">${event.desc}</p>
+                        </div>
+                    `;
+                }
+            }).join('');
 
             html += `</div>`;
             container.innerHTML = html;
@@ -437,7 +465,7 @@
                 data: {
                     labels: ['Sightseeing/Culture', 'Kids/Fun', 'Relax/Beach', 'Food/Markets'],
                     datasets: [{
-                        data: [30, 25, 20, 25],
+                        data: [30, 30, 15, 25],
                         backgroundColor: ['#d97706', '#0891b2', '#14b8a6', '#f59e0b'],
                         borderWidth: 0
                     }]
@@ -458,8 +486,10 @@
                 data: {
                     labels: ['Dec 20', 'Dec 21', 'Dec 22', 'Dec 23', 'Dec 24', 'Dec 25', 'Dec 26', 'Dec 27'],
                     datasets: [{
-                        label: 'Est. Spend (USD)',
-                        data: [40, 60, 50, 45, 80, 55, 30, 40], // Higher on Ba Na Hills day
+                        label: 'Est. Daily Spend (USD)',
+                        // Updated costs based on new schedule
+                        // 27th is low cost now because it's mostly pre-paid
+                        data: [40, 60, 50, 45, 40, 55, 45, 20], 
                         backgroundColor: '#0891b2',
                         borderRadius: 4
                     }]
