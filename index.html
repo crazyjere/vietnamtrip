@@ -95,7 +95,7 @@
             </p>
         </section>
 
-        <!-- Collapsible Logistics Hub (Now First) -->
+        <!-- Collapsible Logistics Hub (Now First & Collapsed) -->
         <section id="logisticsSection">
             <button onclick="toggleLogistics()" class="w-full flex items-center justify-between bg-white p-4 rounded-xl shadow-sm border border-gray-100 mb-2 focus:outline-none hover:bg-gray-50 transition">
                 <div class="flex items-center space-x-3">
@@ -107,10 +107,12 @@
                         <p class="text-xs text-gray-500">Flights, Airbnbs & Maps</p>
                     </div>
                 </div>
-                <i id="logisticsIcon" class="fas fa-chevron-up text-gray-400 transition-transform duration-300"></i>
+                <!-- Added rotate-180 to start pointing down -->
+                <i id="logisticsIcon" class="fas fa-chevron-up text-gray-400 transition-transform duration-300 rotate-180"></i>
             </button>
 
-            <div id="logisticsContent" class="grid grid-cols-1 md:grid-cols-2 gap-4 transition-all duration-300 origin-top">
+            <!-- Added hidden class to start collapsed -->
+            <div id="logisticsContent" class="grid grid-cols-1 md:grid-cols-2 gap-4 transition-all duration-300 origin-top hidden">
                 <!-- HCMC Logistics -->
                 <div class="bg-white p-5 rounded-xl shadow-sm border-l-4 border-purple-500">
                     <div class="flex justify-between items-start mb-3">
@@ -157,18 +159,18 @@
                                <span class="text-xs text-purple-700 bg-white px-1.5 rounded border border-purple-100">Dec 23</span>
                             </div>
                             <div class="flex justify-between items-center mt-2 text-sm">
-                               <div class="text-center">
-                                   <span class="block font-bold text-gray-800 text-base">1:25 PM</span>
-                                   <span class="text-xs text-gray-500 bg-white px-1 rounded">SGN (T1)</span>
-                               </div>
-                               <div class="text-purple-400 text-xs flex flex-col items-center">
-                                   <span class="text-[10px] text-purple-700 font-semibold mb-0.5">Vietnam Air</span>
-                                   <i class="fas fa-long-arrow-alt-right text-lg"></i>
-                               </div>
-                               <div class="text-center">
-                                   <span class="block font-bold text-gray-800 text-base">2:50 PM</span>
-                                   <span class="text-xs text-gray-500 bg-white px-1 rounded">DAD (T1)</span>
-                               </div>
+                                <div class="text-center">
+                                    <span class="block font-bold text-gray-800 text-base">1:25 PM</span>
+                                    <span class="text-xs text-gray-500 bg-white px-1 rounded">SGN (T1)</span>
+                                </div>
+                                <div class="text-purple-400 text-xs flex flex-col items-center">
+                                    <span class="text-[10px] text-purple-700 font-semibold mb-0.5">Vietnam Air</span>
+                                    <i class="fas fa-long-arrow-alt-right text-lg"></i>
+                                </div>
+                                <div class="text-center">
+                                    <span class="block font-bold text-gray-800 text-base">2:50 PM</span>
+                                    <span class="text-xs text-gray-500 bg-white px-1 rounded">DAD (T1)</span>
+                                </div>
                             </div>
                        </div>
                     </div>
@@ -217,7 +219,7 @@
             </div>
         </section>
 
-        <!-- Up Next Live Dashboard (Now Second) -->
+        <!-- Up Next Live Dashboard (Second) -->
         <section id="upNextBlock" class="bg-gradient-to-r from-gray-900 to-gray-800 p-5 rounded-xl border border-gray-700 text-white shadow-lg relative overflow-hidden">
             <div class="flex items-center space-x-2 mb-2">
                 <span class="live-dot w-2 h-2 bg-green-500 rounded-full inline-block"></span>
