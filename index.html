@@ -104,49 +104,49 @@
     <!-- Main Content Area -->
     <main class="max-w-4xl mx-auto px-4 py-6 space-y-6">
 
-        <!-- Currency Calculator Section -->
-        <section class="bg-white p-5 rounded-2xl shadow-md border-2 border-purple-300 mb-2 transform transition-all hover:shadow-lg">
+        <!-- Currency Calculator Section (White Theme + Dark Green Accent) -->
+        <section class="bg-white p-5 rounded-2xl shadow-md border-2 border-green-800 mb-2 transform transition-all hover:shadow-lg">
             <div class="flex justify-between items-center gap-6">
                 <!-- Input Side -->
                 <div class="flex-1 relative">
-                    <label class="block text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Vietnam Dong (k)</label>
+                    <label class="block text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-1">Vietnam Dong (k)</label>
                     <div class="relative flex items-baseline">
-                        <input type="number" id="vndInput" placeholder="50" inputmode="numeric" class="w-full text-3xl font-bold text-gray-800 border-b-2 border-purple-200 focus:border-purple-600 outline-none py-1 bg-transparent placeholder-gray-300 transition-colors" oninput="convertCurrency()">
+                        <input type="number" id="vndInput" placeholder="50" inputmode="numeric" class="w-full text-3xl font-bold text-green-900 border-b-2 border-green-200 focus:border-green-800 outline-none py-1 bg-transparent placeholder-gray-300 transition-colors" oninput="convertCurrency()">
                         <span class="text-lg text-gray-400 font-medium absolute right-0 bottom-2 pointer-events-none">.000</span>
                     </div>
                 </div>
                 
                 <!-- Icon -->
-                <div class="text-purple-400">
+                <div class="text-green-700">
                     <i class="fas fa-exchange-alt text-xl"></i>
                 </div>
 
                 <!-- Output Side -->
                 <div class="flex-1 text-right">
-                    <label class="block text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Singapore Dollar</label>
-                    <div class="text-3xl font-bold text-purple-700 py-1 border-b-2 border-transparent">
+                    <label class="block text-[10px] text-gray-400 font-bold uppercase tracking-wider mb-1">Singapore Dollar</label>
+                    <div class="text-3xl font-bold text-green-900 py-1 border-b-2 border-transparent">
                         $<span id="sgdOutput">0.00</span>
                     </div>
                 </div>
             </div>
-            <p class="text-[10px] text-gray-500 mt-3 w-full text-center border-t border-purple-100 pt-2 font-medium">
+            <p class="text-[10px] text-gray-400 mt-3 w-full text-center border-t border-gray-100 pt-2 font-medium">
                 Rate: 1 SGD ≈ 20,439.67 VND
             </p>
         </section>
 
         <!-- Collapsible Logistics Hub (First & Collapsed) -->
         <section id="logisticsSection">
-            <button onclick="toggleLogistics()" class="w-full flex items-center justify-between bg-white p-4 rounded-xl shadow-md border-2 border-gray-300 mb-2 focus:outline-none hover:bg-gray-50 transition">
+            <button onclick="toggleLogistics()" class="w-full flex items-center justify-between bg-white p-4 rounded-xl shadow-md border-2 border-gray-800 mb-2 focus:outline-none hover:bg-gray-50 transition">
                 <div class="flex items-center space-x-3">
-                    <div class="bg-gray-200 p-2 rounded-lg text-gray-700">
+                    <div class="bg-gray-200 p-2 rounded-lg text-gray-800">
                         <i class="fas fa-passport"></i>
                     </div>
                     <div class="text-left">
-                        <h3 class="font-bold text-gray-800 text-sm">Trip Logistics & Addresses</h3>
+                        <h3 class="font-bold text-gray-800 text-sm">Flight Info & Addresses</h3>
                         <p class="text-xs text-gray-500">Flights, Airbnbs & Maps</p>
                     </div>
                 </div>
-                <i id="logisticsIcon" class="fas fa-chevron-up text-gray-400 transition-transform duration-300 rotate-180"></i>
+                <i id="logisticsIcon" class="fas fa-chevron-up text-gray-800 transition-transform duration-300 rotate-180"></i>
             </button>
 
             <div id="logisticsContent" class="grid grid-cols-1 md:grid-cols-2 gap-4 transition-all duration-300 origin-top hidden">
@@ -718,6 +718,45 @@
 
             // HCMC - SHOPPING
             { 
+                title: "Cay Dau To Stationery", 
+                type: "shopping", 
+                city: "HCMC", 
+                rating: 4.6, 
+                reviews: "500+",
+                address: "57 Nguyen Thuong Hien, D3",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Cay+Dau+To+Stationery",
+                image: "https://images.unsplash.com/photo-1519728637778-94dfd20d75fa?auto=format&fit=crop&w=600&q=80",
+                points: ["Cute stickers & journals", "Local artist designs", "Great for kids/teens"],
+                hoursDisplay: "Daily, 10:00 - 21:00",
+                openTime: 10, closeTime: 21
+            },
+            { 
+                title: "The Craft House", 
+                type: "shopping", 
+                city: "HCMC", 
+                rating: 4.5, 
+                reviews: "1k+",
+                address: "53 Ham Nghi, District 1",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=The+Craft+House+Saigon",
+                image: "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=600&q=80",
+                points: ["Modern artisan gifts", "High quality souvenirs", "Eco-friendly options"],
+                hoursDisplay: "Daily, 09:00 - 21:00",
+                openTime: 9, closeTime: 21
+            },
+            { 
+                title: "Ca Chep Bookstore", 
+                type: "shopping", 
+                city: "HCMC", 
+                rating: 4.6, 
+                reviews: "2k",
+                address: "211 Vo Van Tan, D3",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Ca+Chep+Bookstore",
+                image: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=600&q=80",
+                points: ["Beautiful stationery floor", "Spiral staircase photos", "Huge book selection"],
+                hoursDisplay: "Daily, 08:00 - 22:00",
+                openTime: 8, closeTime: 22
+            },
+            { 
                 title: "Vincom Center", 
                 type: "shopping", 
                 city: "HCMC", 
@@ -729,19 +768,6 @@
                 points: ["Zara & H&M", "Basement food court", "Central location"],
                 hoursDisplay: "Daily, 09:30 - 22:00",
                 openTime: 9.5, closeTime: 22
-            },
-            { 
-                title: "Crescent Mall", 
-                type: "shopping", 
-                city: "HCMC", 
-                rating: 4.4, 
-                reviews: "10k",
-                address: "101 Ton Dat Tien, D7",
-                mapLink: "https://www.google.com/maps/search/?api=1&query=Crescent+Mall",
-                image: "https://images.unsplash.com/photo-1567449303078-5c942454256c?auto=format&fit=crop&w=600&q=80",
-                points: ["Near Starlight Bridge", "Very spacious", "Kid-friendly zones"],
-                hoursDisplay: "Daily, 10:00 - 22:00",
-                openTime: 10, closeTime: 22
             },
             { 
                 title: "Ben Thanh Market", 
@@ -866,6 +892,19 @@
             },
 
             // DA NANG - SHOPPING
+            { 
+                title: "Danang Souvenirs & Cafe", 
+                type: "shopping", 
+                city: "Da Nang", 
+                rating: 4.4, 
+                reviews: "2k",
+                address: "34 Bach Dang",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Danang+Souvenirs+and+Cafe",
+                image: "https://images.unsplash.com/photo-1555529733-0e670560f7e1?auto=format&fit=crop&w=600&q=80",
+                points: ["Modern souvenirs", "Tote bags & magnets", "Relax with coffee"],
+                hoursDisplay: "Daily, 07:00 - 22:30",
+                openTime: 7, closeTime: 22.5
+            },
             { 
                 title: "Lotte Mart", 
                 type: "shopping", 
@@ -1374,8 +1413,30 @@
         // --- INIT ---
 
         window.addEventListener('DOMContentLoaded', () => {
-            renderTabs(0);
-            renderTimeline(0);
+            const today = new Date();
+            const currentMonth = today.getMonth(); // 11 for Dec
+            const currentDay = today.getDate();
+            let initialIndex = 0;
+
+            // Simple logic: If we are in Dec and date matches one of our days
+            if (currentMonth === 11) {
+                const foundIndex = itineraryData.findIndex(day => {
+                    // day.date is "Dec 20"
+                    const dayNum = parseInt(day.date.split(' ')[1]);
+                    return dayNum === currentDay;
+                });
+                
+                if (foundIndex !== -1) {
+                    initialIndex = foundIndex;
+                } else if (currentDay > 28) {
+                    // If after the trip, show the last day or keep at 0
+                    // Let's keep at 0 or maybe last day? Let's stick to 0 as per "default behavior" 
+                    // unless strictly "during trip".
+                }
+            }
+            
+            renderTabs(initialIndex);
+            renderTimeline(initialIndex);
             updateFilterUI(); // Set initial state
             renderRecommendations();
             
