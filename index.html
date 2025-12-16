@@ -5,27 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Family Vietnam Trip Dec 2025</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
     <!-- Chosen Palette: Warm Neutrals & Tropical Accents -->
     <!-- Primary Background: #FAF9F6 (Off White) -->
     <!-- Text: #1F2937 (Gray 800) -->
-    <!-- Accent HCMC: #D97706 (Amber 600 - Energy) -->
+    <!-- Accent HCMC: #7E22CE (Purple 700 - Royal) -->
     <!-- Accent Da Nang: #0891B2 (Cyan 600 - Ocean) -->
-    <!-- Application Structure Plan: 
-         1. Header: Quick status and countdown.
-         2. Logistics Hub: Critical info (Addresses, Flights) prioritized for mobile quick access.
-         3. The Itinerary: Interactive tabs by day. Deep dive into timing.
-         4. Activity & Food Explorer: Filterable cards for research/on-the-fly decisions.
-         5. Trip Stats: Visual breakdown of the trip mix (Chart.js) to ensure balance for kids/adults.
-    -->
-    <!-- Visualization & Content Choices:
-         - Cost Estimation: Chart.js Bar chart to visualize spending flow.
-         - Activity Mix: Chart.js Doughnut chart to show balance of history/fun/food.
-         - Timeline: Vertical flex layout for readability on mobile.
-         - Interaction: Javascript tabs for days to reduce clutter.
-    -->
+    
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 
     <style>
@@ -38,14 +25,6 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.5);
         }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            height: 300px;
-            max-height: 400px;
-        }
         /* Hide scrollbar for horizontal scrolling elements */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
@@ -53,6 +32,33 @@
         .no-scrollbar {
             -ms-overflow-style: none;
             scrollbar-width: none;
+        }
+        .btn-map {
+            transition: all 0.2s;
+        }
+        .btn-map:active {
+            transform: scale(0.95);
+        }
+        .filter-btn {
+            transition: all 0.2s;
+        }
+        /* Pulse animation for the live indicator */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+        .live-dot {
+            position: relative;
+        }
+        .live-dot::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: inherit;
+            border-radius: 50%;
+            z-index: -1;
+            animation: pulse-ring 2s infinite;
         }
     </style>
 </head>
@@ -62,7 +68,7 @@
     <header class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-2">
-                <div class="bg-amber-500 text-white p-2 rounded-lg">
+                <div class="bg-purple-600 text-white p-2 rounded-lg">
                     <i class="fas fa-plane-departure"></i>
                 </div>
                 <div>
@@ -85,30 +91,73 @@
         <section class="text-center space-y-2">
             <h2 class="text-2xl font-bold text-gray-800">Welcome to Vietnam</h2>
             <p class="text-gray-600 text-sm max-w-lg mx-auto">
-                Your updated itinerary with confirmed bookings. Tap the sections below to navigate your journey.
+                Your updated itinerary with addresses, maps, and flight details.
             </p>
         </section>
 
         <!-- Quick Actions / Logistics Hub -->
         <section id="logistics" class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <!-- HCMC Logistics -->
-            <div class="bg-white p-5 rounded-xl shadow-sm border-l-4 border-amber-500">
+            <div class="bg-white p-5 rounded-xl shadow-sm border-l-4 border-purple-500">
                 <div class="flex justify-between items-start mb-3">
-                    <h3 class="font-bold text-lg text-amber-700">📍 Ho Chi Minh City</h3>
-                    <span class="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded">Dec 20-23</span>
+                    <h3 class="font-bold text-lg text-purple-700">📍 Ho Chi Minh City</h3>
+                    <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">Dec 20-23</span>
                 </div>
-                <div class="space-y-3">
+                <div class="space-y-4">
+                    <!-- Accommodation -->
                     <div class="bg-gray-50 p-3 rounded-lg relative group">
                         <p class="text-xs text-gray-500 uppercase font-semibold">Accommodation</p>
                         <p class="font-medium text-sm mt-1">38 Dinh Tien Hoang, Da Kao, District 1</p>
-                        <button onclick="copyText('38 Dinh Tien Hoang, Ho Chi Minh')" class="absolute top-2 right-2 text-gray-400 hover:text-amber-600 p-2">
-                            <i class="far fa-copy"></i>
-                        </button>
+                        <div class="flex space-x-2 mt-2">
+                            <button onclick="copyText('38 Dinh Tien Hoang, Ho Chi Minh')" class="text-xs bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded text-gray-600"><i class="far fa-copy mr-1"></i> Copy</button>
+                            <a href="https://www.google.com/maps/search/?api=1&query=38+Dinh+Tien+Hoang+District+1+Ho+Chi+Minh" target="_blank" class="text-xs bg-purple-100 hover:bg-purple-200 text-purple-800 px-2 py-1 rounded"><i class="fas fa-map-marker-alt mr-1"></i> Map</a>
+                        </div>
                     </div>
-                    <div class="flex items-center space-x-3 text-sm">
-                        <i class="fas fa-plane-arrival text-amber-500"></i>
-                        <span>Arr: Dec 20 @ 3:00 PM</span>
+                    
+                    <!-- Arrival Flight Card -->
+                    <div class="bg-purple-50 p-3 rounded-lg border border-purple-100">
+                         <div class="flex justify-between items-start">
+                            <p class="text-xs text-purple-800 uppercase font-bold"><i class="fas fa-plane-arrival mr-1"></i> ARRIVAL: SQ 184</p>
+                            <span class="text-xs text-purple-700 bg-white px-1.5 rounded border border-purple-100">Dec 20</span>
+                         </div>
+                         <div class="flex justify-between items-center mt-2 text-sm">
+                            <div class="text-center">
+                                <span class="block font-bold text-gray-800 text-base">1:50 PM</span>
+                                <span class="text-xs text-gray-500 bg-white px-1 rounded">SIN (T2)</span>
+                            </div>
+                            <div class="text-purple-400 text-xs flex flex-col items-center">
+                                <span class="text-[10px] text-purple-700 font-semibold mb-0.5">Singapore Air</span>
+                                <i class="fas fa-long-arrow-alt-right text-lg"></i>
+                            </div>
+                            <div class="text-center">
+                                <span class="block font-bold text-gray-800 text-base">3:00 PM</span>
+                                <span class="text-xs text-gray-500 bg-white px-1 rounded">SGN (T2)</span>
+                            </div>
+                         </div>
                     </div>
+
+                    <!-- Domestic Flight Card -->
+                     <div class="bg-purple-50 p-3 rounded-lg border border-purple-100">
+                        <div class="flex justify-between items-start">
+                           <p class="text-xs text-purple-800 uppercase font-bold"><i class="fas fa-plane mr-1"></i> DOMESTIC: VN 132</p>
+                           <span class="text-xs text-purple-700 bg-white px-1.5 rounded border border-purple-100">Dec 23</span>
+                        </div>
+                        <div class="flex justify-between items-center mt-2 text-sm">
+                           <div class="text-center">
+                               <span class="block font-bold text-gray-800 text-base">1:25 PM</span>
+                               <span class="text-xs text-gray-500 bg-white px-1 rounded">SGN (T1)</span>
+                           </div>
+                           <div class="text-purple-400 text-xs flex flex-col items-center">
+                               <span class="text-[10px] text-purple-700 font-semibold mb-0.5">Vietnam Air</span>
+                               <i class="fas fa-long-arrow-alt-right text-lg"></i>
+                           </div>
+                           <div class="text-center">
+                               <span class="block font-bold text-gray-800 text-base">2:50 PM</span>
+                               <span class="text-xs text-gray-500 bg-white px-1 rounded">DAD (T1)</span>
+                           </div>
+                        </div>
+                   </div>
+
                 </div>
             </div>
 
@@ -118,30 +167,57 @@
                     <h3 class="font-bold text-lg text-cyan-700">🌊 Da Nang</h3>
                     <span class="text-xs bg-cyan-100 text-cyan-800 px-2 py-1 rounded">Dec 23-28</span>
                 </div>
-                <div class="space-y-3">
+                <div class="space-y-4">
+                    <!-- Accommodation -->
                     <div class="bg-gray-50 p-3 rounded-lg relative group">
                         <p class="text-xs text-gray-500 uppercase font-semibold">Accommodation</p>
                         <p class="font-medium text-sm mt-1">5 Phan Ba Vanh, Son Tra, Da Nang</p>
-                        <button onclick="copyText('5 Phan Ba Vanh, Son Tra, Da Nang')" class="absolute top-2 right-2 text-gray-400 hover:text-cyan-600 p-2">
-                            <i class="far fa-copy"></i>
-                        </button>
+                        <div class="flex space-x-2 mt-2">
+                            <button onclick="copyText('5 Phan Ba Vanh, Son Tra, Da Nang')" class="text-xs bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded text-gray-600"><i class="far fa-copy mr-1"></i> Copy</button>
+                            <a href="https://www.google.com/maps/search/?api=1&query=5+Phan+Ba+Vanh+Son+Tra+Da+Nang" target="_blank" class="text-xs bg-cyan-100 hover:bg-cyan-200 text-cyan-800 px-2 py-1 rounded"><i class="fas fa-map-marker-alt mr-1"></i> Map</a>
+                        </div>
                     </div>
-                     <div class="flex items-center space-x-3 text-sm">
-                        <i class="fas fa-plane-arrival text-cyan-500"></i>
-                        <span>Arr: Dec 23 @ 2:50 PM</span>
-                    </div>
+
+                    <!-- Return Flight Card -->
+                    <div class="bg-cyan-50 p-3 rounded-lg border border-cyan-100">
+                        <div class="flex justify-between items-start">
+                           <p class="text-xs text-cyan-800 uppercase font-bold"><i class="fas fa-plane-departure mr-1"></i> DEPARTURE: SQ 171</p>
+                           <span class="text-xs text-cyan-600 bg-white px-1.5 rounded border border-cyan-100">Dec 28</span>
+                        </div>
+                        <div class="flex justify-between items-center mt-2 text-sm">
+                           <div class="text-center">
+                               <span class="block font-bold text-gray-800 text-base">11:50 AM</span>
+                               <span class="text-xs text-gray-500 bg-white px-1 rounded">DAD (T2)</span>
+                           </div>
+                           <div class="text-cyan-300 text-xs flex flex-col items-center">
+                               <span class="text-[10px] text-cyan-600 font-semibold mb-0.5">Singapore Air</span>
+                               <i class="fas fa-long-arrow-alt-right text-lg"></i>
+                           </div>
+                           <div class="text-center">
+                               <span class="block font-bold text-gray-800 text-base">3:50 PM</span>
+                               <span class="text-xs text-gray-500 bg-white px-1 rounded">SIN (T2)</span>
+                           </div>
+                        </div>
+                   </div>
+
                 </div>
             </div>
             
-            <!-- Flight Alert -->
-            <div class="bg-red-50 p-4 rounded-xl border border-red-100 md:col-span-2 flex items-center justify-between">
-                <div>
-                    <h4 class="font-bold text-red-800 text-sm"><i class="fas fa-exclamation-circle mr-2"></i>Critical Transfer: Dec 23</h4>
-                    <p class="text-xs text-red-700 mt-1">Flight HCMC → DAD departs 1:25 PM.</p>
+            <!-- Dynamic "Up Next" Block -->
+            <div id="upNextBlock" class="bg-gradient-to-r from-gray-900 to-gray-800 p-5 rounded-xl border border-gray-700 md:col-span-2 text-white shadow-lg relative overflow-hidden">
+                <div class="flex items-center space-x-2 mb-2">
+                    <span class="live-dot w-2 h-2 bg-green-500 rounded-full inline-block"></span>
+                    <p class="text-xs font-bold uppercase tracking-widest text-gray-400">Up Next On Your Schedule</p>
                 </div>
-                <div class="text-right">
-                    <p class="text-xs text-gray-500 uppercase">Leave Airbnb By</p>
-                    <p class="text-xl font-bold text-red-700">10:15 AM</p>
+                
+                <div id="upNextContent">
+                    <!-- Javascript will populate this -->
+                    <div class="animate-pulse flex space-x-4">
+                        <div class="flex-1 space-y-2 py-1">
+                            <div class="h-4 bg-gray-700 rounded w-3/4"></div>
+                            <div class="h-4 bg-gray-700 rounded w-1/2"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -164,36 +240,29 @@
             </div>
         </section>
 
-        <!-- Trip Analytics -->
-        <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-white p-5 rounded-xl shadow-sm">
-                <h3 class="font-bold text-gray-800 mb-4 text-sm uppercase tracking-wide border-b pb-2">Activity Balance</h3>
-                <p class="text-xs text-gray-500 mb-4">Ensuring the kids have fun while adults get their culture fix.</p>
-                <div class="chart-container">
-                    <canvas id="balanceChart"></canvas>
-                </div>
-            </div>
-            <div class="bg-white p-5 rounded-xl shadow-sm">
-                <h3 class="font-bold text-gray-800 mb-4 text-sm uppercase tracking-wide border-b pb-2">Est. Daily Cost (Per Pax)</h3>
-                <p class="text-xs text-gray-500 mb-4">Approximate spend for food & transport (excl. flights/stays/pre-booked).</p>
-                <div class="chart-container">
-                    <canvas id="costChart"></canvas>
-                </div>
-            </div>
-        </section>
-
         <!-- Recommendations Explorer -->
         <section id="explorer" class="space-y-4">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                    <h3 class="text-xl font-bold text-gray-800">Activity & Food Explorer</h3>
-                    <p class="text-sm text-gray-500">Curated specifically for large groups with kids.</p>
+            <div>
+                <h3 class="text-xl font-bold text-gray-800">Activity & Food Explorer</h3>
+                <p class="text-sm text-gray-500">Filter by city and category to find the perfect spot.</p>
+            </div>
+
+            <div class="flex flex-col gap-3 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                <!-- City Filter Row -->
+                <div class="flex items-center space-x-2 overflow-x-auto no-scrollbar">
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-wider mr-2">Region:</span>
+                    <button onclick="setCityFilter('all')" class="filter-btn px-3 py-1.5 rounded-full text-xs font-medium border transition city-filter bg-gray-800 text-white border-gray-800" data-val="all">All Locations</button>
+                    <button onclick="setCityFilter('hcmc')" class="filter-btn px-3 py-1.5 rounded-full text-xs font-medium border transition city-filter bg-white text-gray-600 border-gray-200 hover:bg-purple-50 hover:border-purple-200 hover:text-purple-700" data-val="hcmc">HCMC</button>
+                    <button onclick="setCityFilter('danang')" class="filter-btn px-3 py-1.5 rounded-full text-xs font-medium border transition city-filter bg-white text-gray-600 border-gray-200 hover:bg-cyan-50 hover:border-cyan-200 hover:text-cyan-700" data-val="danang">Da Nang</button>
                 </div>
-                <div class="flex space-x-2">
-                    <button onclick="filterItems('all')" class="px-3 py-1 rounded-full text-sm bg-gray-200 hover:bg-gray-300 transition active-filter" data-filter="all">All</button>
-                    <button onclick="filterItems('food')" class="px-3 py-1 rounded-full text-sm bg-white border border-gray-300 hover:bg-gray-50 transition" data-filter="food">Food</button>
-                    <button onclick="filterItems('activity')" class="px-3 py-1 rounded-full text-sm bg-white border border-gray-300 hover:bg-gray-50 transition" data-filter="activity">Activities</button>
-                    <button onclick="filterItems('shopping')" class="px-3 py-1 rounded-full text-sm bg-white border border-gray-300 hover:bg-gray-50 transition" data-filter="shopping">Shopping</button>
+
+                <!-- Type Filter Row -->
+                <div class="flex items-center space-x-2 overflow-x-auto no-scrollbar">
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-wider mr-2">Category:</span>
+                    <button onclick="setTypeFilter('all')" class="filter-btn px-3 py-1.5 rounded-full text-xs font-medium border transition type-filter bg-gray-200 text-gray-800 border-gray-300" data-val="all">All</button>
+                    <button onclick="setTypeFilter('food')" class="filter-btn px-3 py-1.5 rounded-full text-xs font-medium border transition type-filter bg-white text-gray-600 border-gray-200 hover:bg-orange-50 hover:text-orange-700" data-val="food">Food</button>
+                    <button onclick="setTypeFilter('activity')" class="filter-btn px-3 py-1.5 rounded-full text-xs font-medium border transition type-filter bg-white text-gray-600 border-gray-200 hover:bg-blue-50 hover:text-blue-700" data-val="activity">Activities</button>
+                    <button onclick="setTypeFilter('shopping')" class="filter-btn px-3 py-1.5 rounded-full text-xs font-medium border transition type-filter bg-white text-gray-600 border-gray-200 hover:bg-pink-50 hover:text-pink-700" data-val="shopping">Shopping</button>
                 </div>
             </div>
 
@@ -218,42 +287,98 @@
                 date: "Dec 20",
                 day: "Sat",
                 city: "HCMC",
-                color: "amber",
+                color: "purple",
                 events: [
-                    { time: "3:00 PM", title: "Land at SGN Airport", desc: "Clear immigration. Book two 7-seater Grabs to District 1." },
+                    { time: "1:50 PM", title: "Depart Singapore (SQ 184)", desc: "Changi Airport Terminal 2." },
+                    { time: "3:00 PM", title: "Land at SGN Airport", desc: "Arrival at SGN Terminal 2. Clear immigration. Book two 7-seater Grabs." },
                     { time: "5:30 PM", title: "Check-in Airbnb", desc: "38 Dinh Tien Hoang. Freshen up." },
                     { 
                         time: "7:00 PM", 
                         title: "Man Moi (Tao Dan)", 
                         isBooked: true, 
-                        mapLink: "https://www.google.com/maps?q=Mặn+Mòi,+Tao+Đàn+-+34+Võ+Văn+Tần,+34+Võ+Văn+Tần,+Phường+6,+Quận+3,+Thành+phố+Hồ+Chí+Minh+70000,+Vietnam&ftid=0x31752f45e3ba9d6d:0x2b118e6c5816cfc0&entry=gps&shh=CAE&lucs=,94275415,94284493,94231188,94280568,47071704,94218641,94282134,94203019,94286869&g_ep=CAISEjI1LjQ3LjAuODMzNTQyOTMwMBgAIIgnKlEsOTQyNzU0MTUsOTQyODQ0OTMsOTQyMzExODgsOTQyODA1NjgsNDcwNzE3MDQsOTQyMTg2NDEsOTQyODIxMzQsOTQyMDMwMTksOTQyODY4NjlCAlNH&skid=7d3cdf0d-6da8-4ac7-98c8-d4e790f924c7&g_st=ipc",
-                        desc: "Modern Vietnamese bistro. Estimate ~20 min Grab from 38 Dinh Tien Hoang to 34 Vo Van Tan." 
+                        address: "34 Vo Van Tan, Phuong 6, Quan 3",
+                        mapLink: "https://www.google.com/maps?q=Mặn+Mòi,+Tao+Đàn+-+34+Võ+Văn+Tần,+34+Võ+Văn+Tần,+Phường+6,+Quận+3,+Thành+phố+Hồ+Chí+Minh+70000,+Vietnam&ftid=0x31752f45e3ba9d6d:0x2b118e6c5816cfc0&entry=gps",
+                        desc: "Modern Vietnamese bistro. Estimate ~20 min Grab." 
                     },
-                    { time: "9:00 PM", title: "Nguyen Hue Walking Street", desc: "See the City Hall lit up. Kids can run around. Grab some ice cream." }
+                    { 
+                        time: "9:00 PM", 
+                        title: "Nguyen Hue Walking Street", 
+                        address: "Nguyen Hue, District 1, HCMC",
+                        mapLink: "https://www.google.com/maps/search/?api=1&query=Nguyen+Hue+Walking+Street",
+                        desc: "Travel: ~15 mins from Man Moi. Open 24/7 (best vibes until 11 PM). Highlights: Street performers, City Hall, and the 'Cafe Apartment' block (No. 42). Not a street food hub, but great for walking. Return: ~10 min Grab to Airbnb." 
+                    }
                 ]
             },
             {
                 date: "Dec 21",
                 day: "Sun",
                 city: "HCMC",
-                color: "amber",
+                color: "purple",
                 events: [
-                    { time: "8:00 AM", title: "Cu Chi Tunnels Tour", desc: "Book a half-day private tour for 12 pax. Kids love the tunnels. Wear bug spray." },
-                    { time: "1:00 PM", title: "Lunch: Secret Garden", desc: "Rooftop home-cooked style Vietnamese food." },
-                    { time: "3:00 PM", title: "Artinus 3D Art Museum", desc: "Great for 9 & 11 year olds. Funny photos. Indoor and AC cooled." },
-                    { time: "7:00 PM", title: "Ben Thanh Night Market", desc: "Street food dinner. Watch your bags. Good for souvenir shopping." }
+                    { 
+                        time: "8:00 AM", 
+                        title: "Cu Chi Tunnels Tour", 
+                        address: "Phu Hiep, Cu Chi, HCMC",
+                        mapLink: "https://www.google.com/maps/search/?api=1&query=Cu+Chi+Tunnels",
+                        desc: "Half-day private tour. Wear bug spray." 
+                    },
+                    { 
+                        time: "1:00 PM", 
+                        title: "Lunch: Secret Garden", 
+                        address: "158 Pasteur, Ben Nghe, District 1",
+                        mapLink: "https://www.google.com/maps/search/?api=1&query=Secret+Garden+Restaurant+158+Pasteur",
+                        desc: "Rooftop home-cooked style Vietnamese food. Walk up stairs." 
+                    },
+                    { 
+                        time: "3:00 PM", 
+                        title: "Artinus 3D Art Museum", 
+                        address: "02-04 Road 9, Him Lam, District 7",
+                        mapLink: "https://www.google.com/maps/search/?api=1&query=Artinus+3D+Art+Museum",
+                        desc: "Great for 9 & 11 year olds. Funny photos. Indoor and AC cooled." 
+                    },
+                    { 
+                        time: "7:00 PM", 
+                        title: "Ben Thanh Night Market", 
+                        address: "Le Loi, Ben Thanh, District 1",
+                        mapLink: "https://www.google.com/maps/search/?api=1&query=Ben+Thanh+Market",
+                        desc: "Street food dinner. Watch your bags. Good for souvenir shopping." 
+                    }
                 ]
             },
             {
                 date: "Dec 22",
                 day: "Mon",
                 city: "HCMC",
-                color: "amber",
+                color: "purple",
                 events: [
-                    { time: "9:00 AM", title: "City Landmarks", desc: "Independence Palace & Post Office. Easy walking distance." },
-                    { time: "12:00 PM", title: "Lunch: Pho Hoa Pasteur", desc: "One of the best Pho spots in the city." },
-                    { time: "2:00 PM", title: "Shopping: Saigon Centre", desc: "Takashimaya. High-end AC shopping. Break from the heat." },
-                    { time: "6:00 PM", title: "Saigon River Dinner Cruise", desc: "Book via Klook/Trip.com. Nice views, includes dinner." }
+                    { 
+                        time: "9:00 AM", 
+                        title: "Independence Palace", 
+                        address: "135 Nam Ky Khoi Nghia, District 1",
+                        mapLink: "https://www.google.com/maps/search/?api=1&query=Independence+Palace+Ho+Chi+Minh",
+                        desc: "Historical landmark. Easy walking distance to Post Office." 
+                    },
+                    { 
+                        time: "12:00 PM", 
+                        title: "Lunch: Pho Hoa Pasteur", 
+                        address: "260C Pasteur, District 3",
+                        mapLink: "https://www.google.com/maps/search/?api=1&query=Pho+Hoa+Pasteur",
+                        desc: "One of the best Pho spots in the city." 
+                    },
+                    { 
+                        time: "2:00 PM", 
+                        title: "Shopping: Saigon Centre", 
+                        address: "65 Le Loi, Ben Nghe, District 1",
+                        mapLink: "https://www.google.com/maps/search/?api=1&query=Saigon+Centre",
+                        desc: "Takashimaya. High-end AC shopping. Break from the heat." 
+                    },
+                    { 
+                        time: "6:00 PM", 
+                        title: "Saigon River Dinner Cruise", 
+                        address: "5 Nguyen Tat Thanh, District 4 (Check Ticket)",
+                        mapLink: "https://www.google.com/maps/search/?api=1&query=Saigon+River+Cruise+Port",
+                        desc: "Book via Klook/Trip.com. Nice views, includes dinner." 
+                    }
                 ]
             },
             {
@@ -262,16 +387,16 @@
                 city: "Transit",
                 color: "red",
                 events: [
-                    { time: "10:15 AM", title: "Leave Airbnb", desc: "Mandatory departure time. Traffic to airport can be bad." },
-                    { time: "11:25 AM", title: "Check-in SGN Domestic", desc: "Vietnam Airlines / Vietjet counters." },
-                    { time: "1:25 PM", title: "Fly to Da Nang", desc: "Flight Duration: ~1h 25m." },
-                    { time: "2:50 PM", title: "Land in Da Nang", desc: "Grab to Son Tra Airbnb (5 Phan Ba Vanh)." },
+                    { time: "10:15 AM", title: "Leave Airbnb", desc: "Head to SGN Domestic Terminal 1." },
+                    { time: "1:25 PM", title: "Depart HCMC (VN 132)", desc: "Vietnam Airlines flight to Da Nang (Terminal 1)." },
+                    { time: "2:50 PM", title: "Land in Da Nang", desc: "Arrival at DAD Terminal 1. Grab to Son Tra Airbnb." },
                     { 
                         time: "7:30 PM", 
                         title: "Pizza 4P's Indochina", 
                         isBooked: true, 
-                        mapLink: "https://www.google.com/maps?q=Pizza+4P%27s+Indochina+Da+Nang,+74+Bạch+Đằng,+Street,+Hải+Châu,+Đà+Nẵng+550000,+Vietnam&ftid=0x3142193cf50bef09:0x6f1b1de8e432c22e&entry=gps&shh=CAE&lucs=,94297695,94275415,94284493,94231188,94280568,47071704,94218641,94282134,94286869&g_ep=CAISEjI1LjQ5LjkuODM4ODk5MTgzMBgAIIgnKlEsOTQyOTc2OTUsOTQyNzU0MTUsOTQyODQ0OTMsOTQyMzExODgsOTQyODA1NjgsNDcwNzE3MDQsOTQyMTg2NDEsOTQyODIxMzQsOTQyODY4NjlCAlNH&skid=9678aecb-6664-4b38-96cb-b1411faaad21&g_st=ipc",
-                        desc: "Riverside View. Estimate ~15 min Grab from 5 Phan Ba Vanh to 74 Bach Dang." 
+                        address: "74 Bach Dang, Hai Chau, Da Nang",
+                        mapLink: "https://www.google.com/maps?q=Pizza+4P%27s+Indochina+Da+Nang,+74+Bạch+Đằng,+Street,+Hải+Châu,+Đà+Nẵng+550000,+Vietnam&ftid=0x3142193cf50bef09:0x6f1b1de8e432c22e&entry=gps",
+                        desc: "Riverside View. Estimate ~15 min Grab." 
                     }
                 ]
             },
@@ -281,10 +406,34 @@
                 city: "Da Nang",
                 color: "cyan",
                 events: [
-                    { time: "9:00 AM", title: "Pink Cathedral & Han Market", desc: "Visit the famous pink church then shop for souvenirs/snacks across the street." },
-                    { time: "12:00 PM", title: "Lunch: Banh Xeo Ba Duong", desc: "Local specialty savory pancakes. Fun experience." },
-                    { time: "2:00 PM", title: "My Khe Beach", desc: "Relaxing afternoon by the sea. Soft sand, great for kids." },
-                    { time: "7:00 PM", title: "Xmas Eve Dinner: Madame Lan", desc: "Beautiful courtyard restaurant. Reserve ahead!" }
+                    { 
+                        time: "9:00 AM", 
+                        title: "Pink Cathedral & Han Market", 
+                        address: "156 Tran Phu, Hai Chau, Da Nang",
+                        mapLink: "https://www.google.com/maps/search/?api=1&query=Da+Nang+Cathedral",
+                        desc: "Visit the famous pink church then shop at Han Market nearby." 
+                    },
+                    { 
+                        time: "12:00 PM", 
+                        title: "Lunch: Banh Xeo Ba Duong", 
+                        address: "K280/23 Hoang Dieu, Da Nang",
+                        mapLink: "https://www.google.com/maps/search/?api=1&query=Banh+Xeo+Ba+Duong",
+                        desc: "Local specialty savory pancakes. Fun experience." 
+                    },
+                    { 
+                        time: "2:00 PM", 
+                        title: "My Khe Beach", 
+                        address: "Vo Nguyen Giap Street, Da Nang",
+                        mapLink: "https://www.google.com/maps/search/?api=1&query=My+Khe+Beach",
+                        desc: "Relaxing afternoon by the sea. Soft sand, great for kids." 
+                    },
+                    { 
+                        time: "7:00 PM", 
+                        title: "Xmas Eve: Madame Lan", 
+                        address: "4 Bach Dang, Hai Chau, Da Nang",
+                        mapLink: "https://www.google.com/maps/search/?api=1&query=Madame+Lan+Restaurant",
+                        desc: "Beautiful courtyard restaurant. Reserve ahead!" 
+                    }
                 ]
             },
             {
@@ -293,10 +442,34 @@
                 city: "Hoi An",
                 color: "cyan",
                 events: [
-                    { time: "10:00 AM", title: "Marble Mountains", desc: "Caves and pagodas. There is an elevator for elderly/tired legs." },
-                    { time: "2:00 PM", title: "Hoi An Ancient Town", desc: "30 min drive. No cars allowed in center. Rent bikes or walk." },
-                    { time: "5:00 PM", title: "Lantern Boat Ride", desc: "On Thu Bon river. Release a lantern for Xmas wishes." },
-                    { time: "8:00 PM", title: "Night Market & Return", desc: "Shopping for leather/tailoring. Return to Da Nang." }
+                    { 
+                        time: "10:00 AM", 
+                        title: "Marble Mountains", 
+                        address: "81 Huyen Tran Cong Chua, Da Nang",
+                        mapLink: "https://www.google.com/maps/search/?api=1&query=Marble+Mountains+Da+Nang",
+                        desc: "Caves and pagodas. Use the elevator." 
+                    },
+                    { 
+                        time: "2:00 PM", 
+                        title: "Hoi An Ancient Town", 
+                        address: "Hoi An, Quang Nam",
+                        mapLink: "https://www.google.com/maps/search/?api=1&query=Hoi+An+Ancient+Town",
+                        desc: "30 min drive. Pedestrian only zone." 
+                    },
+                    { 
+                        time: "5:00 PM", 
+                        title: "Lantern Boat Ride", 
+                        address: "Bach Dang Street, Hoi An",
+                        mapLink: "https://www.google.com/maps/search/?api=1&query=Hoi+An+Lantern+Boat",
+                        desc: "On Thu Bon river. Release a lantern for Xmas wishes." 
+                    },
+                    { 
+                        time: "8:00 PM", 
+                        title: "Hoi An Night Market", 
+                        address: "Nguyen Hoang Street, Hoi An",
+                        mapLink: "https://www.google.com/maps/search/?api=1&query=Hoi+An+Night+Market",
+                        desc: "Shopping for souvenirs. Return to Da Nang." 
+                    }
                 ]
             },
             {
@@ -305,10 +478,35 @@
                 city: "Da Nang",
                 color: "cyan",
                 events: [
-                    { time: "10:00 AM", title: "Coffee Making Workshop", isBooked: true, desc: "Learn to make Vietnamese coffee. ~15 min Grab to city center." },
-                    { time: "12:30 PM", title: "Lunch", desc: "Try Mi Quang 1A near the center." },
-                    { time: "2:30 PM", title: "Son Tra Peninsula", desc: "Visit Lady Buddha (Linh Ung Pagoda). Monkeys often seen here!" },
-                    { time: "6:00 PM", title: "Helio Night Market", desc: "Modern, clean night market. Live music, grilled food, carnival games for kids." }
+                    { 
+                        time: "10:00 AM", 
+                        title: "Coffee Making Workshop", 
+                        isBooked: true, 
+                        address: "Check Booking Confirmation",
+                        mapLink: "https://www.google.com/maps/search/?api=1&query=Coffee+Workshop+Da+Nang",
+                        desc: "Learn to make Vietnamese coffee. ~15 min Grab to city center." 
+                    },
+                    { 
+                        time: "12:30 PM", 
+                        title: "Lunch: Mi Quang 1A", 
+                        address: "1A Hai Phong, Hai Chau, Da Nang",
+                        mapLink: "https://www.google.com/maps/search/?api=1&query=Mi+Quang+1A",
+                        desc: "Famous local noodle dish." 
+                    },
+                    { 
+                        time: "2:30 PM", 
+                        title: "Son Tra Peninsula", 
+                        address: "Linh Ung Pagoda, Son Tra",
+                        mapLink: "https://www.google.com/maps/search/?api=1&query=Linh+Ung+Pagoda+Son+Tra",
+                        desc: "Visit Lady Buddha. Monkeys often seen here!" 
+                    },
+                    { 
+                        time: "6:00 PM", 
+                        title: "Helio Night Market", 
+                        address: "2/9 Street, Hai Chau, Da Nang",
+                        mapLink: "https://www.google.com/maps/search/?api=1&query=Helio+Night+Market",
+                        desc: "Modern, clean. Live music & carnival games." 
+                    }
                 ]
             },
             {
@@ -318,11 +516,22 @@
                 color: "cyan",
                 events: [
                     { time: "8:30 AM", title: "Depart for Ba Na Hills", desc: "~45-60 min drive. Book round trip transport." },
-                    { time: "9:30 AM", title: "Ba Na Hills Admission", isBooked: true, desc: "Cable car ride, Golden Bridge, French Village." },
-                    { time: "12:00 PM", title: "Intl. Lunch Buffet", isBooked: true, desc: "Included in booking. Wide variety for everyone." },
-                    { time: "2:00 PM", title: "Alpine Coaster", isBooked: true, desc: "Self-controlled coaster ride. Included in your booking." },
+                    { 
+                        time: "9:30 AM", 
+                        title: "Ba Na Hills", 
+                        isBooked: true, 
+                        address: "Hoa Ninh, Hoa Vang, Da Nang",
+                        mapLink: "https://www.google.com/maps/search/?api=1&query=Sun+World+Ba+Na+Hills",
+                        desc: "Cable car, Golden Bridge, French Village, Buffet Lunch, Coaster." 
+                    },
                     { time: "5:00 PM", title: "Return to Da Nang", desc: "Rest at Airbnb." },
-                    { time: "9:00 PM", title: "Dragon Bridge Fire Show", desc: "(Optional) Only happens Sat/Sun at 9pm. Head to bridge head." }
+                    { 
+                        time: "9:00 PM", 
+                        title: "Dragon Bridge Fire Show", 
+                        address: "Dragon Bridge, Da Nang",
+                        mapLink: "https://www.google.com/maps/search/?api=1&query=Dragon+Bridge+Da+Nang",
+                        desc: "(Optional) Only happens Sat/Sun at 9pm." 
+                    }
                 ]
             },
             {
@@ -331,21 +540,96 @@
                 city: "Home",
                 color: "gray",
                 events: [
-                    { time: "9:30 AM", title: "Checkout & Leave", desc: "Say goodbye to Da Nang." },
-                    { time: "11:50 AM", title: "Flight Home", desc: "Safe travels!" }
+                    { time: "9:30 AM", title: "Checkout & Leave", desc: "Head to DAD International Terminal 2." },
+                    { time: "11:50 AM", title: "Depart Da Nang (SQ 171)", desc: "Singapore Airlines flight to Singapore (Terminal 2)." },
+                    { time: "3:50 PM", title: "Land in Singapore", desc: "Arrival at Changi Terminal 2." }
                 ]
             }
         ];
 
         const recData = [
-            { title: "Banh Xeo Ba Duong", type: "food", city: "Da Nang", tags: ["Local", "Cheap"], desc: "Famous savory pancakes down a small alley. Fun DIY rolling." },
-            { title: "Cong Caphe", type: "food", city: "Both", tags: ["Coffee", "Vibe"], desc: "Coconut Coffee is a must-try. Coconut milk slushy with espresso." },
-            { title: "Lotte Mart", type: "shopping", city: "Da Nang", tags: ["Supplies", "AC"], desc: "Good for stocking up on snacks/water for the Airbnb. Has a bowling alley." },
-            { title: "Klook Pass", type: "activity", city: "All", tags: ["Savings"], desc: "Buy a multi-attraction pass for Ba Na Hills + Asia Park to save ~15%." },
-            { title: "Grab App", type: "activity", city: "App", tags: ["Transport"], desc: "Do not use street taxis. Link your credit card to Grab for easy 7-seater bookings." },
-            { title: "Quan An Ngon", type: "food", city: "HCMC", tags: ["Family", "Variety"], desc: "Huge menu, food court style but seated service. Great for picky eaters." },
-            { title: "Ao Dai Rental", type: "activity", city: "Hoi An", tags: ["Photos"], desc: "Rent traditional dresses for the whole family for photos in Hoi An." },
+            { 
+                title: "Banh Xeo Ba Duong", 
+                type: "food", 
+                city: "Da Nang", 
+                tags: ["Local", "Cheap"], 
+                rating: 4.1, 
+                reviews: "8.5k",
+                address: "K280/23 Hoang Dieu, Da Nang",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Banh+Xeo+Ba+Duong",
+                desc: "Famous savory pancakes down a small alley. Fun DIY rolling." 
+            },
+            { 
+                title: "Cong Caphe (Han Market)", 
+                type: "food", 
+                city: "Da Nang", 
+                tags: ["Coffee", "Vibe"], 
+                rating: 4.5, 
+                reviews: "5.1k",
+                address: "98-96 Bach Dang, Hai Chau",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Cong+Caphe+Bach+Dang+Da+Nang",
+                desc: "Coconut Coffee is a must-try. Coconut milk slushy with espresso." 
+            },
+            { 
+                title: "Lotte Mart", 
+                type: "shopping", 
+                city: "Da Nang", 
+                tags: ["Supplies", "AC"], 
+                rating: 4.4, 
+                reviews: "12k",
+                address: "6 Nai Nam, Hai Chau, Da Nang",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Lotte+Mart+Da+Nang",
+                desc: "Good for stocking up on snacks/water for the Airbnb. Has a bowling alley." 
+            },
+            { 
+                title: "Quan An Ngon 138", 
+                type: "food", 
+                city: "HCMC", 
+                tags: ["Family", "Variety"], 
+                rating: 4.2, 
+                reviews: "8.2k",
+                address: "138 Nam Ky Khoi Nghia, District 1",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Quan+An+Ngon+138",
+                desc: "Huge menu, food court style but seated service. Great for picky eaters." 
+            },
+            { 
+                title: "Ao Dai Rental (Aobaba)", 
+                type: "activity", 
+                city: "Hoi An", 
+                tags: ["Photos"], 
+                rating: 4.8, 
+                reviews: "300+",
+                address: "148 Tran Phu, Hoi An",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Aobaba+Hoi+An+Tailor",
+                desc: "Rent traditional dresses for the whole family for photos in Hoi An." 
+            },
+            { 
+                title: "Secret Garden", 
+                type: "food", 
+                city: "HCMC", 
+                tags: ["Vibe", "Rooftop"], 
+                rating: 4.4, 
+                reviews: "3.2k",
+                address: "158 Pasteur, District 1",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Secret+Garden+Restaurant+HCMC",
+                desc: "Authentic home-cooked meal atmosphere." 
+            },
+            { 
+                title: "Grab App", 
+                type: "activity", 
+                city: "App", 
+                tags: ["Transport"], 
+                rating: 4.8, 
+                reviews: "App Store",
+                address: "Download on Phone",
+                mapLink: "",
+                desc: "Do not use street taxis. Link your credit card to Grab for easy 7-seater bookings." 
+            },
         ];
+
+        // --- FILTER STATE ---
+        let activeCity = 'all';
+        let activeType = 'all';
 
         // --- RENDER FUNCTIONS ---
 
@@ -381,8 +665,30 @@
             `;
 
             html += data.events.map(event => {
+                const mapButton = event.mapLink ? 
+                    `<a href="${event.mapLink}" target="_blank" class="btn-map inline-flex items-center text-xs bg-white border border-gray-200 text-gray-600 px-2 py-1 rounded-md hover:bg-gray-50 hover:text-${data.color}-600 hover:border-${data.color}-300 mt-2 shadow-sm">
+                        <i class="fas fa-location-dot mr-1.5 text-${data.color}-500"></i> View Map
+                     </a>` : '';
+
+                const addressText = event.address ? 
+                    `<div class="text-xs text-gray-400 mt-1 flex items-start">
+                        <i class="fas fa-map-pin mr-1.5 mt-0.5 flex-shrink-0"></i>
+                        <span>${event.address}</span>
+                     </div>` : '';
+
                 if (event.isBooked) {
                     // BOOKED ITEM - Green Card
+                    const bookedMapBtn = event.mapLink ? 
+                        `<a href="${event.mapLink}" target="_blank" class="btn-map inline-flex items-center text-xs bg-white border border-green-300 text-green-700 px-2 py-1 rounded-md hover:bg-green-50 mt-2 shadow-sm">
+                            <i class="fas fa-location-dot mr-1.5 text-green-600"></i> View Map
+                         </a>` : '';
+                    
+                    const bookedAddress = event.address ? 
+                        `<div class="text-xs text-green-700/70 mt-1 flex items-start">
+                            <i class="fas fa-map-pin mr-1.5 mt-0.5 flex-shrink-0"></i>
+                            <span>${event.address}</span>
+                         </div>` : '';
+
                     return `
                         <div class="relative group">
                             <!-- Larger Timeline Dot -->
@@ -396,11 +702,12 @@
                                 <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-1">
                                     <span class="font-bold text-green-700 text-sm w-24 flex-shrink-0">${event.time}</span>
                                     <div class="flex-grow">
-                                        <h4 class="font-bold text-green-900 text-lg inline mr-2">${event.title}</h4>
-                                        ${event.mapLink ? `<a href="${event.mapLink}" target="_blank" class="inline-flex items-center text-xs bg-white border border-green-300 text-green-700 px-2 py-0.5 rounded-full hover:bg-green-100 transition"><i class="fas fa-location-dot mr-1"></i> View Map</a>` : ''}
+                                        <h4 class="font-bold text-green-900 text-lg leading-tight">${event.title}</h4>
                                     </div>
                                 </div>
                                 <p class="text-green-800 text-sm">${event.desc}</p>
+                                ${bookedAddress}
+                                ${bookedMapBtn}
                             </div>
                         </div>
                     `;
@@ -411,9 +718,11 @@
                             <div class="absolute -left-[31px] bg-${data.color}-500 h-4 w-4 rounded-full border-4 border-white shadow-sm mt-1.5"></div>
                             <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1">
                                 <span class="font-bold text-${data.color}-600 text-sm w-20 flex-shrink-0">${event.time}</span>
-                                <h4 class="font-bold text-gray-800 text-lg">${event.title}</h4>
+                                <h4 class="font-bold text-gray-800 text-lg leading-tight">${event.title}</h4>
                             </div>
                             <p class="text-gray-600 text-sm mt-1 bg-gray-50 p-3 rounded-lg border border-gray-100">${event.desc}</p>
+                            ${addressText}
+                            ${mapButton}
                         </div>
                     `;
                 }
@@ -428,99 +737,221 @@
             renderTimeline(index);
         }
 
-        function renderRecommendations(filter = 'all') {
-            const container = document.getElementById('recommendationsGrid');
-            const filtered = filter === 'all' ? recData : recData.filter(item => item.type === filter);
-            
-            container.innerHTML = filtered.map(item => `
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                    <div class="flex justify-between items-start">
-                        <span class="text-xs font-bold uppercase tracking-wider text-gray-400">${item.type}</span>
-                        <span class="bg-gray-100 text-gray-600 text-[10px] px-2 py-0.5 rounded-full">${item.city}</span>
-                    </div>
-                    <h4 class="font-bold text-gray-800 mt-2 text-lg">${item.title}</h4>
-                    <p class="text-gray-600 text-sm mt-1 mb-3">${item.desc}</p>
-                    <div class="flex flex-wrap gap-1">
-                        ${item.tags.map(tag => `<span class="text-xs bg-cyan-50 text-cyan-700 px-2 py-1 rounded border border-cyan-100">#${tag}</span>`).join('')}
-                    </div>
-                </div>
-            `).join('');
-
-            // Update buttons
-            document.querySelectorAll('.active-filter').forEach(el => {
-                el.classList.remove('bg-gray-200', 'active-filter');
-                el.classList.add('bg-white', 'border', 'border-gray-300');
-            });
-            const activeBtn = document.querySelector(`button[data-filter="${filter}"]`);
-            if(activeBtn) {
-                activeBtn.classList.remove('bg-white', 'border', 'border-gray-300');
-                activeBtn.classList.add('bg-gray-200', 'active-filter');
-            }
+        function getCityColor(city) {
+            if (city === 'HCMC') return 'bg-purple-100 text-purple-800';
+            if (city === 'Da Nang' || city === 'Hoi An') return 'bg-cyan-100 text-cyan-800';
+            return 'bg-gray-100 text-gray-600';
         }
 
-        function filterItems(category) {
-            renderRecommendations(category);
+        function getBorderColor(type) {
+            if (type === 'food') return 'border-orange-200 hover:shadow-orange-100';
+            if (type === 'activity') return 'border-blue-200 hover:shadow-blue-100';
+            if (type === 'shopping') return 'border-pink-200 hover:shadow-pink-100';
+            return 'border-gray-100';
+        }
+
+        function setCityFilter(city) {
+            activeCity = city;
+            updateFilterUI();
+            renderRecommendations();
+        }
+
+        function setTypeFilter(type) {
+            activeType = type;
+            updateFilterUI();
+            renderRecommendations();
+        }
+
+        function updateFilterUI() {
+            // Update City Buttons
+            document.querySelectorAll('.city-filter').forEach(btn => {
+                const val = btn.dataset.val;
+                if(val === activeCity) {
+                    btn.classList.remove('bg-white', 'text-gray-600', 'border-gray-200');
+                    if(val === 'hcmc') btn.classList.add('bg-purple-100', 'text-purple-800', 'border-purple-200');
+                    else if(val === 'danang') btn.classList.add('bg-cyan-100', 'text-cyan-800', 'border-cyan-200');
+                    else btn.classList.add('bg-gray-800', 'text-white', 'border-gray-800');
+                } else {
+                     btn.classList.add('bg-white', 'text-gray-600', 'border-gray-200');
+                     if(val === 'hcmc') btn.classList.remove('bg-purple-100', 'text-purple-800', 'border-purple-200');
+                     else if(val === 'danang') btn.classList.remove('bg-cyan-100', 'text-cyan-800', 'border-cyan-200');
+                     else btn.classList.remove('bg-gray-800', 'text-white', 'border-gray-800');
+                }
+            });
+
+             // Update Type Buttons
+            document.querySelectorAll('.type-filter').forEach(btn => {
+                const val = btn.dataset.val;
+                if(val === activeType) {
+                    btn.classList.remove('bg-white', 'text-gray-600', 'border-gray-200');
+                    btn.classList.add('bg-gray-800', 'text-white', 'border-gray-800');
+                } else {
+                    btn.classList.add('bg-white', 'text-gray-600', 'border-gray-200');
+                    btn.classList.remove('bg-gray-800', 'text-white', 'border-gray-800');
+                }
+            });
+        }
+
+        function renderRecommendations() {
+            const container = document.getElementById('recommendationsGrid');
+            
+            const filtered = recData.filter(item => {
+                // City Filter Logic
+                let cityMatch = false;
+                if (activeCity === 'all') {
+                    cityMatch = true;
+                } else if (activeCity === 'hcmc') {
+                    cityMatch = (item.city === 'HCMC' || item.city === 'App');
+                } else if (activeCity === 'danang') {
+                    cityMatch = (item.city === 'Da Nang' || item.city === 'Hoi An' || item.city === 'App');
+                }
+                
+                // Type Filter Logic
+                let typeMatch = false;
+                if (activeType === 'all') {
+                    typeMatch = true;
+                } else {
+                    typeMatch = (item.type === activeType);
+                }
+
+                return cityMatch && typeMatch;
+            });
+            
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="col-span-full text-center py-10 text-gray-400 italic">No items match these filters.</div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(item => {
+                const borderClass = getBorderColor(item.type);
+                const cityClass = getCityColor(item.city);
+                
+                return `
+                <div class="bg-white p-4 rounded-xl shadow-sm border-2 ${borderClass} hover:shadow-md transition-shadow flex flex-col h-full">
+                    <div class="flex justify-between items-start">
+                        <span class="text-xs font-bold uppercase tracking-wider text-gray-400">${item.type}</span>
+                        <span class="${cityClass} text-[10px] px-2 py-0.5 rounded-full font-semibold">${item.city}</span>
+                    </div>
+                    
+                    <h4 class="font-bold text-gray-800 mt-2 text-lg leading-tight">${item.title}</h4>
+                    
+                    ${item.rating ? `
+                    <div class="flex items-center space-x-1 mt-1 mb-2">
+                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                        <span class="text-xs font-bold text-gray-700">${item.rating}</span>
+                        <span class="text-xs text-gray-400">(${item.reviews})</span>
+                    </div>
+                    ` : ''}
+
+                    <p class="text-gray-600 text-sm mt-1 mb-3 flex-grow">${item.desc}</p>
+                    
+                    ${item.address ? `
+                    <div class="text-xs text-gray-400 mb-3 pt-2 border-t border-gray-50">
+                        <i class="fas fa-map-marker-alt mr-1"></i> ${item.address}
+                    </div>
+                    ` : ''}
+
+                    <div class="flex justify-between items-end mt-auto">
+                        <div class="flex flex-wrap gap-1">
+                            ${item.tags.map(tag => `<span class="text-xs bg-cyan-50 text-cyan-700 px-2 py-1 rounded border border-cyan-100">#${tag}</span>`).join('')}
+                        </div>
+                        ${item.mapLink ? `
+                        <a href="${item.mapLink}" target="_blank" class="btn-map inline-flex items-center text-xs bg-white border border-gray-200 text-gray-600 px-2 py-1 rounded-md hover:bg-gray-50 hover:text-cyan-600 hover:border-cyan-300 shadow-sm transition">
+                            <i class="fas fa-location-dot mr-1.5 text-cyan-500"></i> View Map
+                        </a>` : ''}
+                    </div>
+                </div>
+            `}).join('');
         }
 
         function copyText(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                const toast = document.getElementById('toast');
-                toast.classList.remove('opacity-0');
-                setTimeout(() => toast.classList.add('opacity-0'), 2000);
-            });
+            // Fallback for iframe/permissions policy restrictions
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-9999px";
+            textArea.style.top = "0";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    const toast = document.getElementById('toast');
+                    toast.classList.remove('opacity-0');
+                    setTimeout(() => toast.classList.add('opacity-0'), 2000);
+                }
+            } catch (err) {
+                console.error('Copy failed', err);
+            }
+            document.body.removeChild(textArea);
         }
 
-        // --- CHARTS ---
+        function updateUpNext() {
+            const now = new Date();
+            // FOR DEMO: If current year is NOT 2025, default to looking at Dec 20, 2025 2:00 PM for testing
+            // Remove this in production if you want real-time only
+            // const now = new Date("Dec 20, 2025 14:00:00"); 
 
-        function initCharts() {
-            // Balance Chart
-            const ctxBalance = document.getElementById('balanceChart').getContext('2d');
-            new Chart(ctxBalance, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Sightseeing/Culture', 'Kids/Fun', 'Relax/Beach', 'Food/Markets'],
-                    datasets: [{
-                        data: [30, 30, 15, 25],
-                        backgroundColor: ['#d97706', '#0891b2', '#14b8a6', '#f59e0b'],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'right', labels: { boxWidth: 12, font: { size: 10 } } }
+            let upcomingEvents = [];
+
+            itineraryData.forEach(day => {
+                day.events.forEach(event => {
+                    // Simple parse: "Dec 20" + " " + "2025" + " " + "1:50 PM"
+                    const eventDateString = `${day.date}, 2025 ${event.time}`;
+                    const eventDate = new Date(eventDateString);
+                    
+                    if (eventDate > now) {
+                        upcomingEvents.push({
+                            dateObj: eventDate,
+                            dayTitle: day.date,
+                            ...event
+                        });
                     }
-                }
+                });
             });
 
-            // Cost Chart
-            const ctxCost = document.getElementById('costChart').getContext('2d');
-            new Chart(ctxCost, {
-                type: 'bar',
-                data: {
-                    labels: ['Dec 20', 'Dec 21', 'Dec 22', 'Dec 23', 'Dec 24', 'Dec 25', 'Dec 26', 'Dec 27'],
-                    datasets: [{
-                        label: 'Est. Daily Spend (USD)',
-                        // Updated costs based on new schedule
-                        // 27th is low cost now because it's mostly pre-paid
-                        data: [40, 60, 50, 45, 40, 55, 45, 20], 
-                        backgroundColor: '#0891b2',
-                        borderRadius: 4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: { beginAtZero: true, grid: { display: false } },
-                        x: { grid: { display: false } }
-                    },
-                    plugins: {
-                        legend: { display: false }
-                    }
-                }
-            });
+            // Sort by time
+            upcomingEvents.sort((a, b) => a.dateObj - b.dateObj);
+
+            const container = document.getElementById('upNextContent');
+            
+            if (upcomingEvents.length > 0) {
+                const next = upcomingEvents[0];
+                const diffMs = next.dateObj - now;
+                const diffHrs = Math.floor((diffMs % 86400000) / 3600000);
+                const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);
+                
+                // Format nicely
+                let timeString = "";
+                const days = Math.floor(diffMs / 86400000);
+                if (days > 0) timeString += `${days}d `;
+                if (diffHrs > 0) timeString += `${diffHrs}h `;
+                timeString += `${diffMins}m`;
+
+                container.innerHTML = `
+                    <div class="mt-2">
+                        <div class="flex justify-between items-end">
+                            <h2 class="text-2xl font-bold text-white leading-tight">${next.title}</h2>
+                            <span class="text-sm bg-gray-700 px-2 py-1 rounded text-gray-300 whitespace-nowrap ml-2">${next.dayTitle} @ ${next.time}</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mt-1">${next.desc}</p>
+                        <div class="mt-4 pt-3 border-t border-gray-700 flex items-center text-sm text-green-400 font-mono">
+                            <i class="fas fa-stopwatch mr-2"></i> Starts in ${timeString}
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Trip Over or Not Started (if dates are past)
+                // Assuming past means done
+                container.innerHTML = `
+                    <div class="mt-2">
+                        <h2 class="text-xl font-bold text-white">Trip Completed!</h2>
+                        <p class="text-gray-400 text-sm mt-1">Hope you had a wonderful time in Vietnam.</p>
+                    </div>
+                `;
+            }
         }
 
         // --- INIT ---
@@ -528,8 +959,12 @@
         window.addEventListener('DOMContentLoaded', () => {
             renderTabs(0);
             renderTimeline(0);
+            updateFilterUI();
             renderRecommendations();
-            initCharts();
+            
+            // Initial call and interval for live clock
+            updateUpNext();
+            setInterval(updateUpNext, 60000); // Update every minute
         });
 
     </script>
