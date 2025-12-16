@@ -60,6 +60,23 @@
             z-index: -1;
             animation: pulse-ring 2s infinite;
         }
+        
+        /* Closed state styling */
+        .card-closed {
+            filter: grayscale(100%);
+            opacity: 0.6;
+        }
+        .card-closed:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+        
+        /* Remove number input spinner */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
     </style>
 </head>
 <body class="text-gray-800 antialiased pb-20">
@@ -87,19 +104,41 @@
     <!-- Main Content Area -->
     <main class="max-w-4xl mx-auto px-4 py-6 space-y-6">
 
-        <!-- Intro Section -->
-        <section class="text-center space-y-2 mb-4">
-            <h2 class="text-2xl font-bold text-gray-800">Welcome to Vietnam</h2>
-            <p class="text-gray-600 text-sm max-w-lg mx-auto">
-                Your interactive itinerary.
+        <!-- Currency Calculator Section -->
+        <section class="bg-white p-5 rounded-2xl shadow-md border-2 border-purple-300 mb-2 transform transition-all hover:shadow-lg">
+            <div class="flex justify-between items-center gap-6">
+                <!-- Input Side -->
+                <div class="flex-1 relative">
+                    <label class="block text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Vietnam Dong (k)</label>
+                    <div class="relative flex items-baseline">
+                        <input type="number" id="vndInput" placeholder="50" inputmode="numeric" class="w-full text-3xl font-bold text-gray-800 border-b-2 border-purple-200 focus:border-purple-600 outline-none py-1 bg-transparent placeholder-gray-300 transition-colors" oninput="convertCurrency()">
+                        <span class="text-lg text-gray-400 font-medium absolute right-0 bottom-2 pointer-events-none">.000</span>
+                    </div>
+                </div>
+                
+                <!-- Icon -->
+                <div class="text-purple-400">
+                    <i class="fas fa-exchange-alt text-xl"></i>
+                </div>
+
+                <!-- Output Side -->
+                <div class="flex-1 text-right">
+                    <label class="block text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Singapore Dollar</label>
+                    <div class="text-3xl font-bold text-purple-700 py-1 border-b-2 border-transparent">
+                        $<span id="sgdOutput">0.00</span>
+                    </div>
+                </div>
+            </div>
+            <p class="text-[10px] text-gray-500 mt-3 w-full text-center border-t border-purple-100 pt-2 font-medium">
+                Rate: 1 SGD ≈ 20,439.67 VND
             </p>
         </section>
 
-        <!-- Collapsible Logistics Hub (Now First & Collapsed) -->
+        <!-- Collapsible Logistics Hub (First & Collapsed) -->
         <section id="logisticsSection">
-            <button onclick="toggleLogistics()" class="w-full flex items-center justify-between bg-white p-4 rounded-xl shadow-sm border border-gray-100 mb-2 focus:outline-none hover:bg-gray-50 transition">
+            <button onclick="toggleLogistics()" class="w-full flex items-center justify-between bg-white p-4 rounded-xl shadow-md border-2 border-gray-300 mb-2 focus:outline-none hover:bg-gray-50 transition">
                 <div class="flex items-center space-x-3">
-                    <div class="bg-gray-100 p-2 rounded-lg text-gray-600">
+                    <div class="bg-gray-200 p-2 rounded-lg text-gray-700">
                         <i class="fas fa-passport"></i>
                     </div>
                     <div class="text-left">
@@ -107,11 +146,9 @@
                         <p class="text-xs text-gray-500">Flights, Airbnbs & Maps</p>
                     </div>
                 </div>
-                <!-- Added rotate-180 to start pointing down -->
                 <i id="logisticsIcon" class="fas fa-chevron-up text-gray-400 transition-transform duration-300 rotate-180"></i>
             </button>
 
-            <!-- Added hidden class to start collapsed -->
             <div id="logisticsContent" class="grid grid-cols-1 md:grid-cols-2 gap-4 transition-all duration-300 origin-top hidden">
                 <!-- HCMC Logistics -->
                 <div class="bg-white p-5 rounded-xl shadow-sm border-l-4 border-purple-500">
@@ -200,18 +237,18 @@
                                <span class="text-xs text-cyan-600 bg-white px-1.5 rounded border border-cyan-100">Dec 28</span>
                             </div>
                             <div class="flex justify-between items-center mt-2 text-sm">
-                               <div class="text-center">
-                                   <span class="block font-bold text-gray-800 text-base">11:50 AM</span>
-                                   <span class="text-xs text-gray-500 bg-white px-1 rounded">DAD (T2)</span>
-                               </div>
-                               <div class="text-cyan-300 text-xs flex flex-col items-center">
-                                   <span class="text-[10px] text-cyan-600 font-semibold mb-0.5">Singapore Air</span>
-                                   <i class="fas fa-long-arrow-alt-right text-lg"></i>
-                               </div>
-                               <div class="text-center">
-                                   <span class="block font-bold text-gray-800 text-base">3:50 PM</span>
-                                   <span class="text-xs text-gray-500 bg-white px-1 rounded">SIN (T2)</span>
-                               </div>
+                                <div class="text-center">
+                                    <span class="block font-bold text-gray-800 text-base">11:50 AM</span>
+                                    <span class="text-xs text-gray-500 bg-white px-1 rounded">DAD (T2)</span>
+                                </div>
+                                <div class="text-cyan-300 text-xs flex flex-col items-center">
+                                    <span class="text-[10px] text-cyan-600 font-semibold mb-0.5">Singapore Air</span>
+                                    <i class="fas fa-long-arrow-alt-right text-lg"></i>
+                                </div>
+                                <div class="text-center">
+                                    <span class="block font-bold text-gray-800 text-base">3:50 PM</span>
+                                    <span class="text-xs text-gray-500 bg-white px-1 rounded">SIN (T2)</span>
+                                </div>
                             </div>
                        </div>
                     </div>
@@ -281,7 +318,7 @@
                 </div>
             </div>
 
-            <div id="recommendationsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div id="recommendationsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Populated by JS -->
             </div>
         </section>
@@ -304,23 +341,37 @@
                 city: "HCMC",
                 color: "purple",
                 events: [
-                    { time: "1:50 PM", title: "Depart Singapore (SQ 184)", desc: "Changi Airport Terminal 2." },
-                    { time: "3:00 PM", title: "Land at SGN Airport", desc: "Arrival at SGN Terminal 2. Clear immigration. Book two 7-seater Grabs." },
-                    { time: "5:30 PM", title: "Check-in Airbnb", desc: "38 Dinh Tien Hoang. Freshen up." },
+                    { 
+                        time: "1:50 PM", 
+                        title: "Depart Singapore (SQ 184)", 
+                        desc: ["Changi Airport Terminal 2"] 
+                    },
+                    { 
+                        time: "3:00 PM", 
+                        title: "Land at SGN Airport", 
+                        desc: ["Land at SGN Terminal 2", "Clear immigration", "Book two 7-seater Grabs"] 
+                    },
+                    { 
+                        time: "5:30 PM", 
+                        title: "Check-in Airbnb", 
+                        desc: ["38 Dinh Tien Hoang", "Check-in & Freshen up"] 
+                    },
                     { 
                         time: "7:00 PM", 
                         title: "Man Moi (Tao Dan)", 
                         isBooked: true, 
+                        hours: "Daily: 11:00 - 23:00",
                         address: "34 Vo Van Tan, Phuong 6, Quan 3",
                         mapLink: "https://www.google.com/maps?q=Mặn+Mòi,+Tao+Đàn+-+34+Võ+Văn+Tần,+34+Võ+Văn+Tần,+Phường+6,+Quận+3,+Thành+phố+Hồ+Chí+Minh+70000,+Vietnam&ftid=0x31752f45e3ba9d6d:0x2b118e6c5816cfc0&entry=gps",
-                        desc: "Modern Vietnamese bistro. Estimate ~20 min Grab." 
+                        desc: ["Modern Vietnamese bistro", "~20 min Grab from Airbnb"] 
                     },
                     { 
                         time: "9:00 PM", 
                         title: "Nguyen Hue Walking Street", 
+                        hours: "Open 24/7 (Best at night)",
                         address: "Nguyen Hue, District 1, HCMC",
                         mapLink: "https://www.google.com/maps/search/?api=1&query=Nguyen+Hue+Walking+Street",
-                        desc: "Travel: ~15 mins from Man Moi. Open 24/7 (best vibes until 11 PM). Highlights: Street performers, City Hall, and the 'Cafe Apartment' block (No. 42). Not a street food hub, but great for walking. Return: ~10 min Grab to Airbnb." 
+                        desc: ["~15 min Grab from Man Moi", "Best vibes until 11 PM", "See: City Hall & Cafe Apartment 42", "Great for walking (no street food)", "Return: ~10 min Grab to Airbnb"] 
                     }
                 ]
             },
@@ -333,30 +384,34 @@
                     { 
                         time: "8:00 AM", 
                         title: "Cu Chi Tunnels Tour", 
+                        hours: "Daily: 07:00 - 17:00",
                         address: "Phu Hiep, Cu Chi, HCMC",
                         mapLink: "https://www.google.com/maps/search/?api=1&query=Cu+Chi+Tunnels",
-                        desc: "Half-day private tour. Wear bug spray." 
+                        desc: ["Half-day private tour", "Wear bug spray"] 
                     },
                     { 
                         time: "1:00 PM", 
                         title: "Lunch: Secret Garden", 
+                        hours: "Daily: 11:00 - 22:00",
                         address: "158 Pasteur, Ben Nghe, District 1",
                         mapLink: "https://www.google.com/maps/search/?api=1&query=Secret+Garden+Restaurant+158+Pasteur",
-                        desc: "Rooftop home-cooked style Vietnamese food. Walk up stairs." 
+                        desc: ["Rooftop home-cooked style", "Walk up stairs (no elevator)"] 
                     },
                     { 
                         time: "3:00 PM", 
                         title: "Artinus 3D Art Museum", 
+                        hours: "Wknd: 09:00 - 20:00",
                         address: "02-04 Road 9, Him Lam, District 7",
                         mapLink: "https://www.google.com/maps/search/?api=1&query=Artinus+3D+Art+Museum",
-                        desc: "Great for 9 & 11 year olds. Funny photos. Indoor and AC cooled." 
+                        desc: ["Great for kids (9 & 11)", "Funny 3D photos", "Indoor & AC cooled"] 
                     },
                     { 
                         time: "7:00 PM", 
                         title: "Ben Thanh Night Market", 
+                        hours: "Daily: 18:00 - 24:00",
                         address: "Le Loi, Ben Thanh, District 1",
                         mapLink: "https://www.google.com/maps/search/?api=1&query=Ben+Thanh+Market",
-                        desc: "Street food dinner. Watch your bags. Good for souvenir shopping." 
+                        desc: ["Street food dinner", "Good for souvenirs", "Watch your bags"] 
                     }
                 ]
             },
@@ -369,30 +424,34 @@
                     { 
                         time: "9:00 AM", 
                         title: "Independence Palace", 
+                        hours: "Daily: 08:00 - 15:30",
                         address: "135 Nam Ky Khoi Nghia, District 1",
                         mapLink: "https://www.google.com/maps/search/?api=1&query=Independence+Palace+Ho+Chi+Minh",
-                        desc: "Historical landmark. Easy walking distance to Post Office." 
+                        desc: ["Historical landmark", "Walk to Post Office"] 
                     },
                     { 
                         time: "12:00 PM", 
                         title: "Lunch: Pho Hoa Pasteur", 
+                        hours: "Daily: 06:00 - 22:30",
                         address: "260C Pasteur, District 3",
                         mapLink: "https://www.google.com/maps/search/?api=1&query=Pho+Hoa+Pasteur",
-                        desc: "One of the best Pho spots in the city." 
+                        desc: ["Top rated Pho spot"] 
                     },
                     { 
                         time: "2:00 PM", 
                         title: "Shopping: Saigon Centre", 
+                        hours: "Daily: 09:30 - 21:30",
                         address: "65 Le Loi, Ben Nghe, District 1",
                         mapLink: "https://www.google.com/maps/search/?api=1&query=Saigon+Centre",
-                        desc: "Takashimaya. High-end AC shopping. Break from the heat." 
+                        desc: ["Takashimaya (High-end)", "AC break from heat"] 
                     },
                     { 
                         time: "6:00 PM", 
                         title: "Saigon River Dinner Cruise", 
+                        hours: "Starts: 18:00",
                         address: "5 Nguyen Tat Thanh, District 4 (Check Ticket)",
                         mapLink: "https://www.google.com/maps/search/?api=1&query=Saigon+River+Cruise+Port",
-                        desc: "Book via Klook/Trip.com. Nice views, includes dinner." 
+                        desc: ["Book via Klook/Trip.com", "Dinner with views"] 
                     }
                 ]
             },
@@ -402,16 +461,17 @@
                 city: "Transit",
                 color: "red",
                 events: [
-                    { time: "10:15 AM", title: "Leave Airbnb", desc: "Head to SGN Domestic Terminal 1." },
-                    { time: "1:25 PM", title: "Depart HCMC (VN 132)", desc: "Vietnam Airlines flight to Da Nang (Terminal 1)." },
-                    { time: "2:50 PM", title: "Land in Da Nang", desc: "Arrival at DAD Terminal 1. Grab to Son Tra Airbnb." },
+                    { time: "10:15 AM", title: "Leave Airbnb", desc: ["Go to SGN Domestic T1"] },
+                    { time: "1:25 PM", title: "Depart HCMC (VN 132)", desc: ["Vietnam Airlines (T1)", "Flight duration: ~1h 25m"] },
+                    { time: "2:50 PM", title: "Land in Da Nang", desc: ["Land DAD Terminal 1", "Grab to Son Tra Airbnb"] },
                     { 
                         time: "7:30 PM", 
                         title: "Pizza 4P's Indochina", 
                         isBooked: true, 
+                        hours: "Daily: 11:00 - 22:00",
                         address: "74 Bach Dang, Hai Chau, Da Nang",
                         mapLink: "https://www.google.com/maps?q=Pizza+4P%27s+Indochina+Da+Nang,+74+Bạch+Đằng,+Street,+Hải+Châu,+Đà+Nẵng+550000,+Vietnam&ftid=0x3142193cf50bef09:0x6f1b1de8e432c22e&entry=gps",
-                        desc: "Riverside View. Estimate ~15 min Grab." 
+                        desc: ["Riverside View", "~15 min Grab"] 
                     }
                 ]
             },
@@ -424,30 +484,34 @@
                     { 
                         time: "9:00 AM", 
                         title: "Pink Cathedral & Han Market", 
+                        hours: "Market Daily: 06:00 - 19:00",
                         address: "156 Tran Phu, Hai Chau, Da Nang",
                         mapLink: "https://www.google.com/maps/search/?api=1&query=Da+Nang+Cathedral",
-                        desc: "Visit the famous pink church then shop at Han Market nearby." 
+                        desc: ["Famous Pink Church", "Shop at Han Market nearby"] 
                     },
                     { 
                         time: "12:00 PM", 
                         title: "Lunch: Banh Xeo Ba Duong", 
+                        hours: "Daily: 09:00 - 21:30",
                         address: "K280/23 Hoang Dieu, Da Nang",
                         mapLink: "https://www.google.com/maps/search/?api=1&query=Banh+Xeo+Ba+Duong",
-                        desc: "Local specialty savory pancakes. Fun experience." 
+                        desc: ["Savory pancakes (Banh Xeo)", "Fun DIY rolling"] 
                     },
                     { 
                         time: "2:00 PM", 
                         title: "My Khe Beach", 
+                        hours: "Public Access",
                         address: "Vo Nguyen Giap Street, Da Nang",
                         mapLink: "https://www.google.com/maps/search/?api=1&query=My+Khe+Beach",
-                        desc: "Relaxing afternoon by the sea. Soft sand, great for kids." 
+                        desc: ["Relax by the sea", "Soft sand, kid-friendly"] 
                     },
                     { 
                         time: "7:00 PM", 
                         title: "Xmas Eve: Madame Lan", 
+                        hours: "Daily: 06:30 - 21:30",
                         address: "4 Bach Dang, Hai Chau, Da Nang",
                         mapLink: "https://www.google.com/maps/search/?api=1&query=Madame+Lan+Restaurant",
-                        desc: "Beautiful courtyard restaurant. Reserve ahead!" 
+                        desc: ["Beautiful courtyard", "Reserve ahead!"] 
                     }
                 ]
             },
@@ -460,30 +524,34 @@
                     { 
                         time: "10:00 AM", 
                         title: "Marble Mountains", 
+                        hours: "Daily: 07:00 - 17:30",
                         address: "81 Huyen Tran Cong Chua, Da Nang",
                         mapLink: "https://www.google.com/maps/search/?api=1&query=Marble+Mountains+Da+Nang",
-                        desc: "Caves and pagodas. Use the elevator." 
+                        desc: ["Caves & Pagodas", "Use the elevator"] 
                     },
                     { 
                         time: "2:00 PM", 
                         title: "Hoi An Ancient Town", 
+                        hours: "Open Daily",
                         address: "Hoi An, Quang Nam",
                         mapLink: "https://www.google.com/maps/search/?api=1&query=Hoi+An+Ancient+Town",
-                        desc: "30 min drive. Pedestrian only zone." 
+                        desc: ["30 min drive", "Pedestrian only zone"] 
                     },
                     { 
                         time: "5:00 PM", 
                         title: "Lantern Boat Ride", 
+                        hours: "Best: 17:00 - 21:00",
                         address: "Bach Dang Street, Hoi An",
                         mapLink: "https://www.google.com/maps/search/?api=1&query=Hoi+An+Lantern+Boat",
-                        desc: "On Thu Bon river. Release a lantern for Xmas wishes." 
+                        desc: ["Thu Bon River", "Release Xmas lantern"] 
                     },
                     { 
                         time: "8:00 PM", 
                         title: "Hoi An Night Market", 
+                        hours: "Daily: 17:00 - 22:00",
                         address: "Nguyen Hoang Street, Hoi An",
                         mapLink: "https://www.google.com/maps/search/?api=1&query=Hoi+An+Night+Market",
-                        desc: "Shopping for souvenirs. Return to Da Nang." 
+                        desc: ["Souvenir shopping", "Return to Da Nang"] 
                     }
                 ]
             },
@@ -499,28 +567,31 @@
                         isBooked: true, 
                         address: "Check Booking Confirmation",
                         mapLink: "https://www.google.com/maps/search/?api=1&query=Coffee+Workshop+Da+Nang",
-                        desc: "Learn to make Vietnamese coffee. ~15 min Grab to city center." 
+                        desc: ["Learn Vietnamese coffee", "~15 min Grab to center"] 
                     },
                     { 
                         time: "12:30 PM", 
                         title: "Lunch: Mi Quang 1A", 
+                        hours: "Daily: 06:00 - 21:00",
                         address: "1A Hai Phong, Hai Chau, Da Nang",
                         mapLink: "https://www.google.com/maps/search/?api=1&query=Mi+Quang+1A",
-                        desc: "Famous local noodle dish." 
+                        desc: ["Famous local noodle dish"] 
                     },
                     { 
                         time: "2:30 PM", 
                         title: "Son Tra Peninsula", 
+                        hours: "Daily: 06:00 - 21:00",
                         address: "Linh Ung Pagoda, Son Tra",
                         mapLink: "https://www.google.com/maps/search/?api=1&query=Linh+Ung+Pagoda+Son+Tra",
-                        desc: "Visit Lady Buddha. Monkeys often seen here!" 
+                        desc: ["Visit Lady Buddha", "Watch for monkeys"] 
                     },
                     { 
                         time: "6:00 PM", 
                         title: "Helio Night Market", 
+                        hours: "Daily: 17:30 - 22:30",
                         address: "2/9 Street, Hai Chau, Da Nang",
                         mapLink: "https://www.google.com/maps/search/?api=1&query=Helio+Night+Market",
-                        desc: "Modern, clean. Live music & carnival games." 
+                        desc: ["Modern & clean", "Live music & games"] 
                     }
                 ]
             },
@@ -530,22 +601,24 @@
                 city: "Da Nang",
                 color: "cyan",
                 events: [
-                    { time: "8:30 AM", title: "Depart for Ba Na Hills", desc: "~45-60 min drive. Book round trip transport." },
+                    { time: "8:30 AM", title: "Depart for Ba Na Hills", desc: ["~45-60 min drive", "Book round trip transport"] },
                     { 
                         time: "9:30 AM", 
                         title: "Ba Na Hills", 
                         isBooked: true, 
+                        hours: "Daily: 07:00 - 22:00",
                         address: "Hoa Ninh, Hoa Vang, Da Nang",
                         mapLink: "https://www.google.com/maps/search/?api=1&query=Sun+World+Ba+Na+Hills",
-                        desc: "Cable car, Golden Bridge, French Village, Buffet Lunch, Coaster." 
+                        desc: ["Cable Car & Golden Bridge", "French Village & Coaster", "Buffet Lunch included"] 
                     },
-                    { time: "5:00 PM", title: "Return to Da Nang", desc: "Rest at Airbnb." },
+                    { time: "5:00 PM", title: "Return to Da Nang", desc: ["Rest at Airbnb"] },
                     { 
                         time: "9:00 PM", 
                         title: "Dragon Bridge Fire Show", 
+                        hours: "Sat/Sun @ 21:00",
                         address: "Dragon Bridge, Da Nang",
                         mapLink: "https://www.google.com/maps/search/?api=1&query=Dragon+Bridge+Da+Nang",
-                        desc: "(Optional) Only happens Sat/Sun at 9pm." 
+                        desc: ["Sat/Sun at 9pm", "Head to bridge head"] 
                     }
                 ]
             },
@@ -555,90 +628,351 @@
                 city: "Home",
                 color: "gray",
                 events: [
-                    { time: "9:30 AM", title: "Checkout & Leave", desc: "Head to DAD International Terminal 2." },
-                    { time: "11:50 AM", title: "Depart Da Nang (SQ 171)", desc: "Singapore Airlines flight to Singapore (Terminal 2)." },
-                    { time: "3:50 PM", title: "Land in Singapore", desc: "Arrival at Changi Terminal 2." }
+                    { time: "9:30 AM", title: "Checkout & Leave", desc: ["Go to DAD Intl Terminal 2"] },
+                    { time: "11:50 AM", title: "Depart Da Nang (SQ 171)", desc: ["Singapore Airlines (T2)"] },
+                    { time: "3:50 PM", title: "Land in Singapore", desc: ["Land Changi T2"] }
                 ]
             }
         ];
 
         const recData = [
+            // HCMC - FOOD
             { 
-                title: "Banh Xeo Ba Duong", 
+                title: "Banh Mi Huynh Hoa", 
                 type: "food", 
-                city: "Da Nang", 
-                tags: ["Local", "Cheap"], 
-                rating: 4.1, 
-                reviews: "8.5k",
-                address: "K280/23 Hoang Dieu, Da Nang",
-                mapLink: "https://www.google.com/maps/search/?api=1&query=Banh+Xeo+Ba+Duong",
-                desc: "Famous savory pancakes down a small alley. Fun DIY rolling." 
+                city: "HCMC", 
+                rating: 4.3, 
+                reviews: "25k+",
+                address: "26 Le Thi Rieng, Ben Thanh",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Banh+Mi+Huynh+Hoa",
+                image: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=600&q=80",
+                points: ["Famous meat-heavy Banh Mi", "Takeaway only", "Best before 6PM"],
+                hoursDisplay: "Daily, 11:00 - 21:00",
+                openTime: 11, closeTime: 21
             },
             { 
-                title: "Cong Caphe (Han Market)", 
+                title: "Cuc Gach Quan", 
                 type: "food", 
-                city: "Da Nang", 
-                tags: ["Coffee", "Vibe"], 
-                rating: 4.5, 
-                reviews: "5.1k",
-                address: "98-96 Bach Dang, Hai Chau",
-                mapLink: "https://www.google.com/maps/search/?api=1&query=Cong+Caphe+Bach+Dang+Da+Nang",
-                desc: "Coconut Coffee is a must-try. Coconut milk slushy with espresso." 
+                city: "HCMC", 
+                rating: 4.3, 
+                reviews: "3.8k",
+                address: "10 Dang Tat, Tan Dinh",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Cuc+Gach+Quan",
+                image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80",
+                points: ["Rustic country style food", "Architect-designed house", "Celebrity favorite"],
+                hoursDisplay: "Daily, 09:00 - 23:00",
+                openTime: 9, closeTime: 23
             },
             { 
-                title: "Lotte Mart", 
-                type: "shopping", 
-                city: "Da Nang", 
-                tags: ["Supplies", "AC"], 
-                rating: 4.4, 
-                reviews: "12k",
-                address: "6 Nai Nam, Hai Chau, Da Nang",
-                mapLink: "https://www.google.com/maps/search/?api=1&query=Lotte+Mart+Da+Nang",
-                desc: "Good for stocking up on snacks/water for the Airbnb. Has a bowling alley." 
+                title: "Hum Vegetarian", 
+                type: "food", 
+                city: "HCMC", 
+                rating: 4.6, 
+                reviews: "2.5k",
+                address: "32 Vo Van Tan, District 3",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Hum+Vegetarian",
+                image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80",
+                points: ["Upscale vegetarian", "Peaceful garden vibes", "Great cocktails/drinks"],
+                hoursDisplay: "Daily, 10:00 - 22:00",
+                openTime: 10, closeTime: 22
             },
             { 
                 title: "Quan An Ngon 138", 
                 type: "food", 
                 city: "HCMC", 
-                tags: ["Family", "Variety"], 
                 rating: 4.2, 
                 reviews: "8.2k",
-                address: "138 Nam Ky Khoi Nghia, District 1",
+                address: "138 Nam Ky Khoi Nghia",
                 mapLink: "https://www.google.com/maps/search/?api=1&query=Quan+An+Ngon+138",
-                desc: "Huge menu, food court style but seated service. Great for picky eaters." 
-            },
-            { 
-                title: "Ao Dai Rental (Aobaba)", 
-                type: "activity", 
-                city: "Hoi An", 
-                tags: ["Photos"], 
-                rating: 4.8, 
-                reviews: "300+",
-                address: "148 Tran Phu, Hoi An",
-                mapLink: "https://www.google.com/maps/search/?api=1&query=Aobaba+Hoi+An+Tailor",
-                desc: "Rent traditional dresses for the whole family for photos in Hoi An." 
+                image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80",
+                points: ["Huge variety menu", "Street food style safely", "Good for large groups"],
+                hoursDisplay: "Daily, 07:00 - 22:00",
+                openTime: 7, closeTime: 22
             },
             { 
                 title: "Secret Garden", 
                 type: "food", 
                 city: "HCMC", 
-                tags: ["Vibe", "Rooftop"], 
                 rating: 4.4, 
                 reviews: "3.2k",
                 address: "158 Pasteur, District 1",
                 mapLink: "https://www.google.com/maps/search/?api=1&query=Secret+Garden+Restaurant+HCMC",
-                desc: "Authentic home-cooked meal atmosphere." 
+                image: "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=600&q=80",
+                points: ["Rooftop garden", "Home-cooked meals", "No elevator (4 floors)"],
+                hoursDisplay: "Daily, 11:00 - 22:00",
+                openTime: 11, closeTime: 22
             },
+            { 
+                title: "Phuc Long Coffee & Tea", 
+                type: "food", 
+                city: "HCMC", 
+                rating: 4.5, 
+                reviews: "Many",
+                address: "Various Locations",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Phuc+Long+Coffee+and+Tea",
+                image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=600&q=80",
+                points: ["Famous Peach Tea", "Strong local coffee", "Multiple branches"],
+                hoursDisplay: "Daily, 07:00 - 22:30",
+                openTime: 7, closeTime: 22.5
+            },
+
+            // HCMC - SHOPPING
+            { 
+                title: "Vincom Center", 
+                type: "shopping", 
+                city: "HCMC", 
+                rating: 4.5, 
+                reviews: "15k",
+                address: "72 Le Thanh Ton",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Vincom+Center+Dong+Khoi",
+                image: "https://images.unsplash.com/photo-1519567241046-7f570eee3c9e?auto=format&fit=crop&w=600&q=80",
+                points: ["Zara & H&M", "Basement food court", "Central location"],
+                hoursDisplay: "Daily, 09:30 - 22:00",
+                openTime: 9.5, closeTime: 22
+            },
+            { 
+                title: "Crescent Mall", 
+                type: "shopping", 
+                city: "HCMC", 
+                rating: 4.4, 
+                reviews: "10k",
+                address: "101 Ton Dat Tien, D7",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Crescent+Mall",
+                image: "https://images.unsplash.com/photo-1567449303078-5c942454256c?auto=format&fit=crop&w=600&q=80",
+                points: ["Near Starlight Bridge", "Very spacious", "Kid-friendly zones"],
+                hoursDisplay: "Daily, 10:00 - 22:00",
+                openTime: 10, closeTime: 22
+            },
+            { 
+                title: "Ben Thanh Market", 
+                type: "shopping", 
+                city: "HCMC", 
+                rating: 4.0, 
+                reviews: "35k",
+                address: "Le Loi, Ben Thanh",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Ben+Thanh+Market",
+                image: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&w=600&q=80",
+                points: ["Must Buy: Lacquerware & Art", "Souvenirs & fabric", "Must bargain hard"],
+                hoursDisplay: "Daily, 06:00 - 18:00",
+                openTime: 6, closeTime: 18
+            },
+            { 
+                title: "Takashimaya (Saigon Centre)", 
+                type: "shopping", 
+                city: "HCMC", 
+                rating: 4.6, 
+                reviews: "18k",
+                address: "65 Le Loi, District 1",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Takashimaya+Vietnam",
+                image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=600&q=80",
+                points: ["High-end Japanese brands", "Amazing basement food", "Clean & modern"],
+                hoursDisplay: "Daily, 09:30 - 21:30",
+                openTime: 9.5, closeTime: 21.5
+            },
+
+            // HCMC - ACTIVITIES
+            { 
+                title: "Golden Dragon Water Puppet", 
+                type: "activity", 
+                city: "HCMC", 
+                rating: 4.2, 
+                reviews: "1.5k",
+                address: "55B Nguyen Thi Minh Khai",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Golden+Dragon+Water+Puppet+Theatre",
+                image: "https://images.unsplash.com/photo-1535914254981-40b3b3c7e39a?auto=format&fit=crop&w=600&q=80",
+                points: ["50-min show", "Live traditional music", "Unique cultural art"],
+                hoursDisplay: "Daily shows ~17:00",
+                openTime: 8, closeTime: 20
+            },
+            { 
+                title: "Saigon Zoo & Botanical Gardens", 
+                type: "activity", 
+                city: "HCMC", 
+                rating: 4.2, 
+                reviews: "22k",
+                address: "2 Nguyen Binh Khiem",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Saigon+Zoo+and+Botanical+Gardens",
+                image: "https://images.unsplash.com/photo-1534567176755-26962353138f?auto=format&fit=crop&w=600&q=80",
+                points: ["Oldest zoo in Asia", "Great for morning walks", "Cheap entry ticket"],
+                hoursDisplay: "Daily, 07:00 - 17:30",
+                openTime: 7, closeTime: 17.5
+            },
+
+            // DA NANG - FOOD
+            { 
+                title: "Banh Xeo Ba Duong", 
+                type: "food", 
+                city: "Da Nang", 
+                rating: 4.1, 
+                reviews: "8.5k",
+                address: "K280/23 Hoang Dieu",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Banh+Xeo+Ba+Duong",
+                image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80",
+                points: ["Savory pancakes", "Hidden alley gem", "Fun DIY rolling"],
+                hoursDisplay: "Daily, 09:00 - 21:30",
+                openTime: 9, closeTime: 21.5
+            },
+            { 
+                title: "My Quang Ech Bep Trang", 
+                type: "food", 
+                city: "Da Nang", 
+                rating: 4.0, 
+                reviews: "2k",
+                address: "441 Ong Ich Khiem",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Bep+Trang+My+Quang",
+                image: "https://images.unsplash.com/photo-1631705607062-c0e81792440e?auto=format&fit=crop&w=600&q=80",
+                points: ["Frog noodles specialty", "Bold flavors", "Local experience"],
+                hoursDisplay: "Daily, 06:30 - 22:00",
+                openTime: 6.5, closeTime: 22
+            },
+            { 
+                title: "Hai San Nam Danh", 
+                type: "food", 
+                city: "Da Nang", 
+                rating: 4.3, 
+                reviews: "4k",
+                address: "K139/H59/38 Tran Quang Khai",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Hai+San+Nam+Danh",
+                image: "https://images.unsplash.com/photo-1534604973900-c43ab4c2e0ab?auto=format&fit=crop&w=600&q=80",
+                points: ["Very cheap seafood", "Deep in alley maze", "Always crowded"],
+                hoursDisplay: "Daily, 10:00 - 20:00",
+                openTime: 10, closeTime: 20
+            },
+            { 
+                title: "Madam Khanh - Banh Mi Queen", 
+                type: "food", 
+                city: "Hoi An", 
+                rating: 4.5, 
+                reviews: "5k",
+                address: "115 Tran Cao Van, Hoi An",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Madam+Khanh+The+Banh+Mi+Queen",
+                image: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=600&q=80",
+                points: ["Legendary Banh Mi", "Crispy bread", "Secret sauce"],
+                hoursDisplay: "Daily, 06:30 - 19:30",
+                openTime: 6.5, closeTime: 19.5
+            },
+            { 
+                title: "Cong Caphe (Han Market)", 
+                type: "food", 
+                city: "Da Nang", 
+                rating: 4.5, 
+                reviews: "5.1k",
+                address: "98-96 Bach Dang",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Cong+Caphe+Bach+Dang+Da+Nang",
+                image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=600&q=80",
+                points: ["Coconut Coffee slushy", "Communist chic decor", "Riverside view"],
+                hoursDisplay: "Daily, 07:00 - 23:00",
+                openTime: 7, closeTime: 23
+            },
+
+            // DA NANG - SHOPPING
+            { 
+                title: "Lotte Mart", 
+                type: "shopping", 
+                city: "Da Nang", 
+                rating: 4.4, 
+                reviews: "12k",
+                address: "6 Nai Nam, Hai Chau",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Lotte+Mart+Da+Nang",
+                image: "https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=600&q=80",
+                points: ["Must Buy: Cashews & Coffee", "Bowling & Cinema", "Good souvenir snacks"],
+                hoursDisplay: "Daily, 08:00 - 22:00",
+                openTime: 8, closeTime: 22
+            },
+            { 
+                title: "Han Market", 
+                type: "shopping", 
+                city: "Da Nang", 
+                rating: 4.0, 
+                reviews: "18k",
+                address: "119 Tran Phu, Hai Chau 1",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Han+Market+Da+Nang",
+                image: "https://images.unsplash.com/photo-1533900298318-6b8da08a523e?auto=format&fit=crop&w=600&q=80",
+                points: ["Must Buy: Rattan Bags", "Dried fruits/coffee", "Central location"],
+                hoursDisplay: "Daily, 06:00 - 19:00",
+                openTime: 6, closeTime: 19
+            },
+            { 
+                title: "Vincom Plaza Da Nang", 
+                type: "shopping", 
+                city: "Da Nang", 
+                rating: 4.3, 
+                reviews: "8k",
+                address: "910A Ngo Quyen",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Vincom+Plaza+Ngo+Quyen",
+                image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=600&q=80",
+                points: ["Ice rink", "Cinema", "Jollibee/Highlands"],
+                hoursDisplay: "Daily, 09:30 - 22:00",
+                openTime: 9.5, closeTime: 22
+            },
+            { 
+                title: "Go! (Big C) Da Nang", 
+                type: "shopping", 
+                city: "Da Nang", 
+                rating: 4.2, 
+                reviews: "11k",
+                address: "257 Hung Vuong",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Big+C+Da+Nang",
+                image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80",
+                points: ["Must Buy: Green Bean Cake", "Coconut Candy & Spices", "Local prices"],
+                hoursDisplay: "Daily, 08:00 - 22:00",
+                openTime: 8, closeTime: 22
+            },
+
+            // DA NANG - ACTIVITIES
+            { 
+                title: "Mikazuki Water Park 365", 
+                type: "activity", 
+                city: "Da Nang", 
+                rating: 4.6, 
+                reviews: "3k",
+                address: "Xuan Thieu Tourism Area",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Mikazuki+Water+Park+365",
+                image: "https://images.unsplash.com/photo-1582653291997-079a1c04c792?auto=format&fit=crop&w=600&q=80",
+                points: ["Indoor & Outdoor", "Hot springs", "Japanese theme"],
+                hoursDisplay: "Daily, 09:00 - 19:00",
+                openTime: 9, closeTime: 19
+            },
+            { 
+                title: "Ao Dai Rental (Aobaba)", 
+                type: "activity", 
+                city: "Hoi An", 
+                rating: 4.8, 
+                reviews: "300+",
+                address: "148 Tran Phu, Hoi An",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Aobaba+Hoi+An+Tailor",
+                image: "https://images.unsplash.com/photo-1599708153386-51e429320294?auto=format&fit=crop&w=600&q=80",
+                points: ["Family rentals", "Great for photos", "Hoi An tradition"],
+                hoursDisplay: "Daily, 08:00 - 20:00",
+                openTime: 8, closeTime: 20
+            },
+            { 
+                title: "Hoi An Memories Show", 
+                type: "activity", 
+                city: "Hoi An", 
+                rating: 4.7, 
+                reviews: "2k",
+                address: "Hoi An Impression Park",
+                mapLink: "https://www.google.com/maps/search/?api=1&query=Hoi+An+Memories+Show",
+                image: "https://images.unsplash.com/photo-1514525253440-b393452e2729?auto=format&fit=crop&w=600&q=80",
+                points: ["Huge outdoor show", "Visual storytelling", "Hundreds of actors"],
+                hoursDisplay: "Park open 17:00-22:00",
+                openTime: 17, closeTime: 22
+            },
+            
+            // APP
             { 
                 title: "Grab App", 
                 type: "activity", 
                 city: "App", 
-                tags: ["Transport"], 
                 rating: 4.8, 
                 reviews: "App Store",
                 address: "Download on Phone",
                 mapLink: "",
-                desc: "Do not use street taxis. Link your credit card to Grab for easy 7-seater bookings." 
+                image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=600&q=80",
+                points: ["Essential for travel", "Link credit card", "Fixed pricing"],
+                hoursDisplay: "24/7 Service",
+                openTime: 0, closeTime: 24
             },
         ];
 
@@ -690,6 +1024,10 @@
                         <i class="fas fa-map-pin mr-1.5 mt-0.5 flex-shrink-0"></i>
                         <span>${event.address}</span>
                      </div>` : '';
+                
+                // New logic: Green background for hours tag in itinerary timeline
+                const hoursBadge = event.hours ? 
+                    `<span class="text-[10px] bg-green-100 text-green-800 border border-green-200 px-2 py-0.5 rounded ml-2 whitespace-nowrap font-medium"><i class="far fa-clock mr-1"></i>${event.hours}</span>` : '';
 
                 if (event.isBooked) {
                     // BOOKED ITEM - Green Card
@@ -703,6 +1041,9 @@
                             <i class="fas fa-map-pin mr-1.5 mt-0.5 flex-shrink-0"></i>
                             <span>${event.address}</span>
                          </div>` : '';
+                    
+                    const bookedHours = event.hours ? 
+                         `<div class="text-[10px] text-green-800 font-medium mt-1 bg-green-100/50 inline-block px-1.5 py-0.5 rounded border border-green-200/50"><i class="far fa-clock mr-1"></i>${event.hours}</div>` : '';
 
                     return `
                         <div class="relative group">
@@ -720,7 +1061,10 @@
                                         <h4 class="font-bold text-green-900 text-lg leading-tight">${event.title}</h4>
                                     </div>
                                 </div>
-                                <p class="text-green-800 text-sm">${event.desc}</p>
+                                <ul class="list-disc list-inside text-sm text-green-800 space-y-1">
+                                    ${event.desc.map(d => `<li>${d}</li>`).join('')}
+                                </ul>
+                                ${bookedHours}
                                 ${bookedAddress}
                                 ${bookedMapBtn}
                             </div>
@@ -733,9 +1077,14 @@
                             <div class="absolute -left-[31px] bg-${data.color}-500 h-4 w-4 rounded-full border-4 border-white shadow-sm mt-1.5"></div>
                             <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1">
                                 <span class="font-bold text-${data.color}-600 text-sm w-20 flex-shrink-0">${event.time}</span>
-                                <h4 class="font-bold text-gray-800 text-lg leading-tight">${event.title}</h4>
+                                <div class="flex-grow">
+                                    <h4 class="font-bold text-gray-800 text-lg leading-tight inline-block">${event.title}</h4>
+                                    ${hoursBadge}
+                                </div>
                             </div>
-                            <p class="text-gray-600 text-sm mt-1 bg-gray-50 p-3 rounded-lg border border-gray-100">${event.desc}</p>
+                            <ul class="list-disc list-inside text-sm text-gray-600 space-y-1 mt-1 bg-gray-50 p-3 rounded-lg border border-gray-100">
+                                ${event.desc.map(d => `<li>${d}</li>`).join('')}
+                            </ul>
                             ${addressText}
                             ${mapButton}
                         </div>
@@ -807,6 +1156,18 @@
             });
         }
 
+        function isShopOpen(item) {
+            const now = new Date();
+            const hour = now.getHours() + (now.getMinutes() / 60);
+            
+            // Handle edge case of 24/7 or late night
+            if (item.closeTime < item.openTime) {
+                // e.g. open 18:00 close 02:00
+                return hour >= item.openTime || hour < item.closeTime;
+            }
+            return hour >= item.openTime && hour < item.closeTime;
+        }
+
         function renderRecommendations() {
             const container = document.getElementById('recommendationsGrid');
             
@@ -840,40 +1201,49 @@
             container.innerHTML = filtered.map(item => {
                 const borderClass = getBorderColor(item.type);
                 const cityClass = getCityColor(item.city);
+                const isOpen = isShopOpen(item);
+                const contentOpacity = isOpen ? '' : 'opacity-75'; 
+                const imageGrayscale = isOpen ? '' : 'grayscale';
+                const statusDot = isOpen ? 'bg-green-600' : 'bg-red-500';
                 
+                // New logic: Vibrant green tag if open
+                const hoursTagClass = isOpen 
+                    ? 'bg-green-100 text-green-800 border-green-200 font-bold' 
+                    : 'bg-gray-100 text-gray-500 border-gray-200 font-medium';
+
                 return `
-                <div class="bg-white p-4 rounded-xl shadow-sm border-2 ${borderClass} hover:shadow-md transition-shadow flex flex-col h-full">
-                    <div class="flex justify-between items-start">
-                        <span class="text-xs font-bold uppercase tracking-wider text-gray-400">${item.type}</span>
-                        <span class="${cityClass} text-[10px] px-2 py-0.5 rounded-full font-semibold">${item.city}</span>
+                <div class="bg-white rounded-xl shadow-sm border-2 ${borderClass} hover:shadow-md transition-shadow flex flex-col h-full overflow-hidden transition-all duration-300">
+                    <div class="h-32 w-full relative">
+                        <img src="${item.image}" class="w-full h-full object-cover ${imageGrayscale}" alt="${item.title}" onerror="this.src='https://placehold.co/600x400?text=No+Image'">
+                        <span class="absolute top-2 right-2 ${cityClass} text-[10px] px-2 py-0.5 rounded-full font-bold shadow-sm uppercase tracking-wide border border-white/50">${item.city}</span>
+                        ${!isOpen ? '<div class="absolute inset-0 bg-gray-900/10 flex items-center justify-center"><span class="bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg border border-red-400">CLOSED NOW</span></div>' : ''}
                     </div>
                     
-                    <h4 class="font-bold text-gray-800 mt-2 text-lg leading-tight">${item.title}</h4>
-                    
-                    ${item.rating ? `
-                    <div class="flex items-center space-x-1 mt-1 mb-2">
-                        <i class="fas fa-star text-yellow-400 text-xs"></i>
-                        <span class="text-xs font-bold text-gray-700">${item.rating}</span>
-                        <span class="text-xs text-gray-400">(${item.reviews})</span>
-                    </div>
-                    ` : ''}
-
-                    <p class="text-gray-600 text-sm mt-1 mb-3 flex-grow">${item.desc}</p>
-                    
-                    ${item.address ? `
-                    <div class="text-xs text-gray-400 mb-3 pt-2 border-t border-gray-50">
-                        <i class="fas fa-map-marker-alt mr-1"></i> ${item.address}
-                    </div>
-                    ` : ''}
-
-                    <div class="flex justify-between items-end mt-auto">
-                        <div class="flex flex-wrap gap-1">
-                            ${item.tags.map(tag => `<span class="text-xs bg-cyan-50 text-cyan-700 px-2 py-1 rounded border border-cyan-100">#${tag}</span>`).join('')}
+                    <div class="p-4 flex flex-col flex-grow ${contentOpacity}">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-gray-800 text-lg leading-tight w-3/4">${item.title}</h4>
+                            ${item.rating ? `
+                            <div class="flex items-center space-x-1 bg-yellow-50 px-1.5 py-0.5 rounded border border-yellow-100">
+                                <i class="fas fa-star text-yellow-400 text-[10px]"></i>
+                                <span class="text-xs font-bold text-gray-700">${item.rating}</span>
+                            </div>
+                            ` : ''}
                         </div>
-                        ${item.mapLink ? `
-                        <a href="${item.mapLink}" target="_blank" class="btn-map inline-flex items-center text-xs bg-white border border-gray-200 text-gray-600 px-2 py-1 rounded-md hover:bg-gray-50 hover:text-cyan-600 hover:border-cyan-300 shadow-sm transition">
-                            <i class="fas fa-location-dot mr-1.5 text-cyan-500"></i> View Map
-                        </a>` : ''}
+
+                        <ul class="text-xs text-gray-600 space-y-1 mb-4 flex-grow list-disc list-inside opacity-80">
+                            ${item.points.map(p => `<li>${p}</li>`).join('')}
+                        </ul>
+                        
+                        <div class="flex justify-between items-end mt-auto pt-3 border-t border-gray-50">
+                            <div class="flex items-center text-[10px] px-2 py-1 rounded border ${hoursTagClass}">
+                                <span class="w-2 h-2 ${statusDot} rounded-full mr-1.5"></span>
+                                ${item.hoursDisplay}
+                            </div>
+                            ${item.mapLink ? `
+                            <a href="${item.mapLink}" target="_blank" class="btn-map inline-flex items-center text-xs bg-white border border-gray-200 text-gray-600 px-2 py-1 rounded-md hover:bg-gray-50 hover:text-cyan-600 hover:border-cyan-300 shadow-sm transition">
+                                <i class="fas fa-location-dot mr-1"></i> Map
+                            </a>` : ''}
+                        </div>
                     </div>
                 </div>
             `}).join('');
@@ -901,6 +1271,21 @@
                 console.error('Copy failed', err);
             }
             document.body.removeChild(textArea);
+        }
+        
+        function convertCurrency() {
+            const rate = 20439.67;
+            const input = document.getElementById('vndInput').value;
+            const output = document.getElementById('sgdOutput');
+            
+            if (input) {
+                // Input is in 'k', so multiply by 1000 first
+                const vnd = parseFloat(input) * 1000;
+                const sgd = vnd / rate;
+                output.innerText = sgd.toFixed(2);
+            } else {
+                output.innerText = "0.00";
+            }
         }
 
         function updateUpNext() {
@@ -947,13 +1332,16 @@
                 if (diffHrs > 0) timeString += `${diffHrs}h `;
                 timeString += `${diffMins}m`;
 
+                // Handle first point if array
+                const descText = Array.isArray(next.desc) ? next.desc[0] : next.desc;
+
                 container.innerHTML = `
                     <div class="mt-2">
                         <div class="flex justify-between items-end">
                             <h2 class="text-2xl font-bold text-white leading-tight">${next.title}</h2>
                             <span class="text-sm bg-gray-700 px-2 py-1 rounded text-gray-300 whitespace-nowrap ml-2">${next.dayTitle} @ ${next.time}</span>
                         </div>
-                        <p class="text-gray-400 text-sm mt-1">${next.desc}</p>
+                        <p class="text-gray-400 text-sm mt-1">${descText}</p>
                         <div class="mt-4 pt-3 border-t border-gray-700 flex items-center text-sm text-green-400 font-mono">
                             <i class="fas fa-stopwatch mr-2"></i> Starts in ${timeString}
                         </div>
